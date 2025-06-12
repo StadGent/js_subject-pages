@@ -1,0 +1,10 @@
+steps:
+  build:
+    image: woodpeckerci/plugin-docker-buildx
+    settings:
+      dockerfile: Dockerfile.fastboot
+      repo: ${CI_REPO}
+      dry_run: true
+when:
+  event:
+    - pull_request

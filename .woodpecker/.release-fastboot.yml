@@ -1,0 +1,11 @@
+steps:
+  build:
+    image: woodpeckerci/plugin-docker-buildx
+    settings:
+      dockerfile: Dockerfile.fastboot
+      repo: ${CI_REPO}
+      tags: "${CI_COMMIT_TAG##v}-fastboot"
+    secrets: [ docker_username, docker_password ]
+when:
+  event: tag
+  tag: v*

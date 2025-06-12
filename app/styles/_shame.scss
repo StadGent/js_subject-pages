@@ -1,0 +1,133 @@
+/* ==========================================================================
+   #SHAME
+   Very specific css and temporary css.
+   ========================================================================== */
+
+/* Yasgui styling overrides */
+
+table.dataTable tbody td,
+table.dataTable tbody th {
+	min-width: 2rem;
+}
+
+.yasgui .controlbar {
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+}
+
+.yasgui .autocompleteWrapper {
+  display: none !important;
+}
+
+.yasgui table.dataTable {
+  width: auto !important;
+}
+
+.yasgui td,
+.yasgui td {
+  word-break: break-word !important;
+  text-align: left;
+}
+
+/* Base font and background */
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background-color: #f7f7f7;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+/* Header bar */
+header, .navbar, .navbar-default {
+  background-color: #004b87; /* Stad Gent dark blue */
+  color: white;
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+}
+
+header a, .navbar a {
+  color: white !important;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* Links */
+a {
+  color: #004b87;
+}
+
+a:hover {
+  color: #007acc;
+}
+
+/* Headings */
+h1, h2, h3 {
+  color: #004b87;
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+/* Form styling */
+input, select, textarea {
+  font-family: inherit;
+  font-size: 1rem;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button, input[type="submit"] {
+  background-color: #004b87;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover, input[type="submit"]:hover {
+  background-color: #0062b4;
+}
+
+/* Results/output */
+pre, code, .query-results {
+  background-color: white;
+  border: 1px solid #ddd;
+  padding: 1rem;
+  margin-top: 1rem;
+  border-radius: 6px;
+  overflow-x: auto;
+  font-size: 0.95rem;
+}
+
+/* Layout and container */
+.container, .main, #wrapper {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: white;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  border-radius: 8px;
+}
+
+/* Footer */
+footer {
+  background-color: #004b87;
+  color: white;
+  text-align: center;
+  padding: 1rem;
+  margin-top: 3rem;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .container, .main {
+    padding: 1rem;
+  }
+
+  header, footer {
+    padding: 1rem;
+  }
+}
