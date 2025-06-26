@@ -13,19 +13,26 @@ export default class ViewVerwerkingsActiviteitRoute extends Route {
     const query = `
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 PREFIX dct: <http://purl.org/dc/terms/>
-SELECT ?title ?type ?verwerker
+SELECT ?title ?type ?verwerker ?grond ?desc ?period
 WHERE {
   <${resource}> dct:title ?title;
                 dct:type/skos:prefLabel ?type;
-                <http://data.vlaanderen.be/ns/toestemming#verwerker>/skos:prefLabel ?verwerker.
+                <http://data.vlaanderen.be/ns/toestemming#verwerker>/skos:prefLabel ?verwerker;
+                <http://data.vlaanderen.be/ns/toestemming#verwerkingsgrond>/skos:prefLabel ?grond.
+  OPTIONAL {
+    <${resource}> dct:description ?desc.
+  }
+  OPTIONAL {
+    <${resource}> dct:temporal/dct:title ?period.
+  }
 }
 `;
     console.log(query);
     let endpoint;
     if (this.fastboot.isFastBoot) {
-      endpoint = `${window.BACKEND_URL || 'http://localhost'}/sparql`;
+      endpoint = `${window.BACKEND_URL || 'http://localhost'}/sparql/`;
     } else {
-      endpoint = `/sparql`;
+      endpoint = `/sparql/`;
     }
     const url = `${endpoint}?query=${encodeURIComponent(query)}`;
     console.log(url);
@@ -39,9 +46,13 @@ WHERE {
 
     const getValue = (field) => bindings[field]?.value || '';
     return {
-      type: getValue('type'),
+      categorie: getValue('type'),
       title: getValue('title'),
       verwerkers: getValue('verwerker'),
+      rechtmatigheid: getValue('grond'),
+      beschrijving: getValue('desc'),
+      bewaartermijn: getValue('period'),
+      resource: resource
     };
   }
 }
