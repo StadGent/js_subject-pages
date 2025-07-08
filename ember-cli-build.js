@@ -10,6 +10,12 @@ module.exports = function (defaults) {
       preferNative: true,
       nativePromise: true,
     },
+    sassOptions: {
+      includePaths: [
+        'node_modules/breakpoint-sass/stylesheets',
+        'node_modules/susy/sass'
+      ]
+    },
   });
 
   // Comment/Uncomment this to enable/disable Embroider build
