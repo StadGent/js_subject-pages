@@ -92,5 +92,8 @@
   },
   "ember": {
     "edition": "octane"
+  },
+  "dependencies": {
+    "gent_styleguide": "^6.0.14"
   }
 }
