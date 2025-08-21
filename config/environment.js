@@ -4,7 +4,7 @@ module.exports = function (environment) {
   const ENV = {
     modulePrefix: 'frontend-centrale-vindplaats',
     environment,
-    rootURL: '/',
+    rootURL: '/data/',
     locationType: 'history',
     metis: {
       routes: {},
@@ -16,7 +16,7 @@ module.exports = function (environment) {
       extraPrefixes: '{{YASGUI_EXTRA_PREFIXES}}',
     },
     fastboot: {
-      hostWhitelist: [/^localhost(:[0-9]*)?/, 'localhost', /^.*$/], //TODO: this is potentialy a danger, FIX THIS
+      hostWhitelist: [/^localhost(:[0-9]*)?/, 'localhost', /^.*$/], 
     },
     EmberENV: {
       EXTEND_PROTOTYPES: false,
