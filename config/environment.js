@@ -9,6 +9,7 @@ module.exports = function (environment) {
     metis: {
       routes: {},
       baseUrl: '{{METIS_BASE_URL}}',
+      serviceBase: '{{METIS_SERVICE_BASE}}'
     },
     yasgui: {
       // NOTE: look at app/modifiers/yasgui.js when changing this variable
@@ -16,7 +17,7 @@ module.exports = function (environment) {
       extraPrefixes: '{{YASGUI_EXTRA_PREFIXES}}',
     },
     fastboot: {
-      hostWhitelist: [/^localhost(:[0-9]*)?/, 'localhost', /^.*$/], 
+      hostWhitelist: [/^localhost(:[0-9]*)?/, 'localhost', /^.*$/],
     },
     EmberENV: {
       EXTEND_PROTOTYPES: false,
