@@ -13,7 +13,8 @@ module.exports = function (defaults) {
     sassOptions: {
       includePaths: [
         'node_modules/breakpoint-sass/stylesheets',
-        'node_modules/gent_styleguide/build/styleguide'      ]
+        'node_modules/gent_styleguide/build/styleguide'
+      ]
     },
   });
 
