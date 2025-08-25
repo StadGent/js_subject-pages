@@ -1,73 +1,104 @@
-<div class="site-name"><span>Verwerkingsregister</span></div>
-<main id="main"><article class="detail-layout">
-  <h1>{{@model.title}}</h1>
-  <div class="summary-box highlight highlight--top">
-    <div class="highlight__inner">
-      <h2 class="visually-hidden">
-        samenvatting
-      </h2>
-      <dl>
-        <div>
-          <dt>Categorie</dt>
-          <dd>{{@model.categorie}}</dd>
+<main class="info-page">
+  <article class="detail-layout">
+    
+    {{! Content Header Component }}
+    <div class="content-header primary dark-background overlap">
+      <div class="content-container">
+        <h1>{{@model.title}}</h1>
+        <div class="summary">
+          <div class="summary__text">
+            <p>{{@model.beschrijving}}</p>
+          </div>
         </div>
-        <div>
-          <dt>Verwerkende dienst</dt>
-          <dd>{{@model.verwerker}}</dd>
-        </div>
-        <div>
-          <dt>Rechtmatigheid</dt>
-          <dd>{{@model.rechtmatigheid}}</dd>
-        </div>
-      </dl>
-
-      <div class="accolade"></div>
+      </div>
     </div>
-  </div>
-  <h2>Beschrijving</h2>
-  <p>{{@model.beschrijving}}</p>
-  <h2 data-v-3751eab8>Gegevens</h2>
-  TODO
-  {{!--    <h3 data-v-3751eab8>
-    Over wie?
-  </h3> <p data-v-3751eab8>
-    Eigenaar-kotbaas
-  </p> <!----> <h3 data-v-3751eab8>Welke persoonsgegevens?</h3>
-  <ul data-v-3751eab8><li data-v-3751eab8>
-    A1: Persoonlijke identificatiegegevens
-  </li><li data-v-3751eab8>
-    B. Contactgegevens
-  </li><li data-v-3751eab8>
-    M. Woningkenmerken
-  </li></ul> <h3 data-v-3751eab8>Welke gevoelige persoonsgegevens?</h3> <p data-v-3751eab8>
-    Er zijn geen gevoelige persoonsgegevens van toepassing.
-  </p>
-  --}}
-  <h2 data-v-3751eab8>Rechtmatigheid</h2>
-  TODO
-  {{!--
-  <h3 data-v-3751eab8>Type</h3> <p data-v-3751eab8>Toestemming betrokkene</p>
-  <h3 data-v-3751eab8>
-    Verduidelijking
-  </h3>
-  <p data-v-3751eab8>
-    1) Samenwerkingsprotocol voor studentenhuisvesting Kotatgent (2014_GR_00757)
-    2) Gebruiksvoorwaarden kotatgent (https://kot.stad.gent/nl/gebruiksvoorwaarden)
-  </p> <h2 data-v-3751eab8>
-    Ontvangers
-  </h2>
-  <ul data-v-3751eab8>
-    <li data-v-3751eab8>
-      Brandweerzone Centrum
-    </li><li data-v-3751eab8>
-      Dienst Toezicht Wonen
-    </li><li data-v-3751eab8>
-      Bouwen en Milieu
-    </li><li data-v-3751eab8>
-      FIN Belastingen Wonen+
-    </li>
-  </ul>
-  --}}
-  <h2 data-v-3751eab8>Bewaartermijn</h2>
-  <p>{{@model.bewaartermijn}}</p>
-</article></main>
+
+    {{! Summary Component }}
+    <div class="highlight highlight--top">
+      <div class="highlight__inner">
+        <h2 class="visually-hidden">Samenvatting</h2>
+        <dl>
+          <div>
+            <dt>Categorie</dt>
+            <dd>{{@model.categorie}}</dd>
+          </div>
+          <div>
+            <dt>Verwerkende dienst</dt>
+            <dd>{{@model.verwerkers}}</dd>
+          </div>
+          <div>
+            <dt>Rechtmatigheid</dt>
+            <dd>{{@model.rechtmatigheid}}</dd>
+          </div>
+        </dl>
+        <div class="accolade"></div>
+      </div>
+    </div>
+
+    {{! Content sections }}
+    <div class="content-container">
+      
+      {{! Gegevens sectie }}
+      <section>
+        <h2>Gegevens</h2>
+        
+        {{#if @model.persoonsgegevens}}
+          <h3>Welke persoonsgegevens?</h3>
+          <ul>
+            {{#each @model.persoonsgegevens as |gegeven|}}
+              <li>{{gegeven}}</li>
+            {{/each}}
+          </ul>
+          {{#if @model.persoonsgegevensBeschrijving}}
+            <p>{{@model.persoonsgegevensBeschrijving}}</p>
+          {{/if}}
+        {{/if}}
+
+        {{#if @model.gevoeligePersoonsgegevens}}
+          <h3>Welke gevoelige persoonsgegevens?</h3>
+          <ul>
+            {{#each @model.gevoeligePersoonsgegevens as |gegeven|}}
+              <li>{{gegeven}}</li>
+            {{/each}}
+          </ul>
+          {{#if @model.gevoeligePersoonsgegevensBeschrijving}}
+            <p>{{@model.gevoeligePersoonsgegevensBeschrijving}}</p>
+          {{/if}}
+        {{else}}
+          <h3>Welke gevoelige persoonsgegevens?</h3>
+          <p>Er zijn geen gevoelige persoonsgegevens van toepassing.</p>
+        {{/if}}
+      </section>
+
+      {{! Rechtmatigheid sectie }}
+      <section>
+        <h2>Rechtmatigheid</h2>
+        <h3>Type</h3>
+        <p>{{@model.rechtmatigheid}}</p>
+        {{#if @model.rechtmatigheidVerduidelijking}}
+          <h3>Verduidelijking</h3>
+          <p>{{@model.rechtmatigheidVerduidelijking}}</p>
+        {{/if}}
+      </section>
+
+      {{! Ontvangers sectie }}
+      {{#if @model.toegangVerleend}}
+        <section>
+          <h2>Ontvangers</h2>
+          <ul>
+            {{#each @model.toegangVerleend as |ontvanger|}}
+              <li>{{ontvanger}}</li>
+            {{/each}}
+          </ul>
+        </section>
+      {{/if}}
+      
+      {{! Bewaartermijn sectie }}
+      <section>
+        <h2>Bewaartermijn</h2>
+        <p>{{@model.bewaartermijn}}</p>
+      </section>
+
+    </div>
+  </article>
+</main>
