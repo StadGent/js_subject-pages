@@ -1,39 +1,32 @@
+{{page-title (concat "Stad Gent | " @model.title)}}
+
+<SiteHeader @title={{@model.title}} />
+
 <main class="info-page">
   <article class="detail-layout">
     
     {{! Content Header Component }}
-    <div class="content-header primary dark-background overlap">
-      <div class="content-container">
+    <div class="content-header-container primary dark-background overlap">
+      <div>
         <h1>{{@model.title}}</h1>
-        <div class="summary">
-          <div class="summary__text">
-            <p>{{@model.beschrijving}}</p>
-          </div>
+        <div class="summary-text">
+          <p>{{@model.beschrijving}}</p>
         </div>
       </div>
     </div>
 
     {{! Summary Component }}
-    <div class="highlight highlight--top">
-      <div class="highlight__inner">
-        <h2 class="visually-hidden">Samenvatting</h2>
-        <dl>
-          <div>
-            <dt>Categorie</dt>
-            <dd>{{@model.categorie}}</dd>
-          </div>
-          <div>
-            <dt>Verwerkende dienst</dt>
-            <dd>{{@model.verwerkers}}</dd>
-          </div>
-          <div>
-            <dt>Rechtmatigheid</dt>
-            <dd>{{@model.rechtmatigheid}}</dd>
-          </div>
-        </dl>
-        <div class="accolade"></div>
-      </div>
-    </div>
+    <aside class="summary-box">
+      <h2 class="visually-hidden">Samenvatting</h2>
+      <dl>
+        <dt>Categorie</dt>
+        <dd>{{@model.categorie}}</dd>
+        <dt>Verwerkende dienst</dt>
+        <dd>{{@model.verwerkers}}</dd>
+        <dt>Rechtmatigheid</dt>
+        <dd>{{@model.rechtmatigheid}}</dd>
+      </dl>
+    </aside>
 
     {{! Content sections }}
     <div class="content-container">
@@ -102,3 +95,5 @@
     </div>
   </article>
 </main>
+
+<SiteFooter />
