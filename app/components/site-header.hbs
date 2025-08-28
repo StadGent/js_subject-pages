@@ -1,0 +1,30 @@
+<header class="header">
+  <div class="content-container">
+    <a href="/" title="Home" class="site-logo" rel="home">
+      Stad Gent
+    </a>
+
+    <form class="form search" action="https://stad.gent/nl/zoeken" method="get">
+      <label for="header-search">Search</label>
+      <input type="search" id="header-search" name="search" class="search" placeholder="Search" required="true" />
+      <button type="submit" class="button">
+        Zoeken
+      </button>
+    </form>
+  </div>
+
+  <div class="site-name">
+    <span>Verwerkingsregister</span>
+  </div>
+
+  <nav class="breadcrumb section--default" aria-labelledby="header-crumbs">
+    <div class="content-container">
+      <h2 id="header-crumbs" class="visually-hidden">Breadcrumb</h2>
+      <ol class="no-style">
+        <li><a href='https://stad.gent/'>Home</a></li>
+        <li><a href='https://stad.gent/nl/verwerkingsregister/'>Verwerkingsregister</a></li>
+        <li><span>{{if @title @title "Verwerkingsactiviteit"}}</span></li>
+      </ol>
+    </div>
+  </nav>
+</header>
