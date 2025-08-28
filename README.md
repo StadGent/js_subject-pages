@@ -2,6 +2,9 @@
 
   <br>
 
+flow: identifier => dispatcher => frontend => sparqlproxy (proxy_pass https://stad.gent/sparql)
+
+
 ## Table of content
 
 
@@ -40,6 +43,7 @@ For development where fetching data about a uri is important you will need to ru
 ``` cd frontend-centrale-vindplaats ```
 
 * Serve the frontend through a proxy
+npx ember serve --proxy http://localhost:80
 ``` ember serve --proxy http://localhost:80 ``` <small> (will automatically serve through fastboot)</small>
 
 * Visit localhost
