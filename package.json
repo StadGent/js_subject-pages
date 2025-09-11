@@ -61,7 +61,7 @@
     "ember-fetch": "^8.1.2",
     "ember-intl": "^6.4.0",
     "ember-load-initializers": "^2.1.2",
-    "ember-metis": "https://github.com/redpencilio/ember-metis.git#e11fe79",
+    "ember-metis": "^0.12.0",
     "ember-modifier": "^4.2.0",
     "ember-page-title": "^8.2.3",
     "ember-qunit": "^8.1.0",
