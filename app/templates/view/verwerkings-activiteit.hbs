@@ -34,6 +34,11 @@
       {{! Gegevens sectie }}
       <section>
         <h2>Gegevens</h2>
+
+        {{#if @model.persoonsgegevensBeschrijving}}
+          <h3>Over wie?</h3>
+          <p>{{@model.persoonsgegevensBeschrijving}}</p>
+        {{/if}}
         
         {{#if @model.persoonsgegevens}}
           <h3>Welke persoonsgegevens?</h3>
@@ -42,9 +47,6 @@
               <li>{{gegeven}}</li>
             {{/each}}
           </ul>
-          {{#if @model.persoonsgegevensBeschrijving}}
-            <p>{{@model.persoonsgegevensBeschrijving}}</p>
-          {{/if}}
         {{/if}}
 
         {{#if @model.gevoeligePersoonsgegevens}}
