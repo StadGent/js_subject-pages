@@ -1,6 +1,8 @@
 {{page-title (concat "Stad Gent | " @model.title)}}
 
+{{#unless @model.embed}}
 <SiteHeader @title={{@model.title}} />
+{{/unless}}
 
 <main class="info-page">
   <article class="detail-layout">
@@ -98,4 +100,6 @@
   </article>
 </main>
 
+{{#unless @model.embed}}
 <SiteFooter />
+{{/unless}}
