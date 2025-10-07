@@ -9,7 +9,7 @@ module.exports = function (environment) {
     metis: {
       routes: {},
       baseUrl: '{{METIS_BASE_URL}}',
-      serviceBase: '{{METIS_SERVICE_BASE}}'
+      serviceBase: '{{METIS_SERVICE_BASE}}',
     },
     yasgui: {
       // NOTE: look at app/modifiers/yasgui.js when changing this variable
@@ -40,6 +40,7 @@ module.exports = function (environment) {
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
     ENV.metis.baseUrl = 'https://stad.gent/';
+    ENV.metis.serviceBase = '/data';
   }
 
   if (environment === 'test') {
