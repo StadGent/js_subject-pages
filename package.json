@@ -95,5 +95,8 @@
   },
   "dependencies": {
     "gent_styleguide": "^6.0.14"
+  },
+  "volta": {
+    "node": "20.19.5"
   }
 }
