@@ -39,8 +39,8 @@ module.exports = function (environment) {
     // ENV.APP.LOG_TRANSITIONS = true;
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
-    ENV.metis.baseUrl = 'https://stad.gent/';
-    ENV.metis.serviceBase = '/data';
+    ENV.metis.baseUrl = process.env.EMBER_METIS_BASE_URL || 'https://qa.stad.gent/';
+    ENV.metis.serviceBase = process.env.EMBER_METIS_SERVICE_BASE || '/data';
   }
 
   if (environment === 'test') {
