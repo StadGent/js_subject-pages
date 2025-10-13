@@ -1,3 +1,15 @@
 <AuModalContainer />
 
+<div class="container">
+
+{{#unless this.isEmbedded}}
+<SiteHeader @title={{this.title}} />
+{{/unless}}
+
 {{outlet}}
+
+{{#unless this.isEmbedded}}
+<SiteFooter />
+{{/unless}}
+
+</div>

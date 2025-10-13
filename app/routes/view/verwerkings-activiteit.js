@@ -7,11 +7,9 @@ export default class ViewVerwerkingsActiviteitRoute extends Route {
 
   queryParams = {
     resource: { refreshModel: true },
-    embed: { refreshModel: false },
   };
 
-  async model({ resource }, transition) {
-    const embed = transition.to.queryParams.embed;
+  async model({ resource }) {
     const query = `
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#> 
 PREFIX dct: <http://purl.org/dc/terms/> 
@@ -72,7 +70,7 @@ GROUP BY ?verwerking ?id ?description ?processor ?type ?name ?personalDataDescri
       const value = getValue(field);
       return value ? value.split(',') : [];
     };
-    return {
+    const model = {
       id: getValue('id'),
       title: getValue('name'),
       categorie: getValue('type'),
@@ -86,8 +84,9 @@ GROUP BY ?verwerking ?id ?description ?processor ?type ?name ?personalDataDescri
       gevoeligePersoonsgegevens: getValueSplit('sensitivePersonalData'),
       gevoeligePersoonsgegevensBeschrijving: getValue('sensitivePersonalDataDescription'),
       toegangVerleend: getValueSplit('grantees'),
-      resource: resource,
-      embed: embed
+      resource: resource
     };
+
+    return model;
   }
 }
