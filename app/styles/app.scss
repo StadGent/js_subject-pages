@@ -15,22 +15,6 @@
  * UTILITIES: Single function helper classes (namespace: '.au-u-...')
  */
 
-
-// Import Gent styleguide
+ // Import Gent styleguide
 $styleguide-dir: '../assets' !default;
 @import "sass/main_cli";
-
-// Appuniversum styles
-/*
-@import "@appuniversum/ember-appuniversum/styles/a-settings";
-@import "@appuniversum/ember-appuniversum/styles/a-tools";
-@import "@appuniversum/ember-appuniversum/styles/a-generic";
-@import "@appuniversum/ember-appuniversum/styles/a-elements";
-@import "@appuniversum/ember-appuniversum/styles/a-objects";
-@import "@appuniversum/ember-appuniversum/styles/a-components";
-@import "@appuniversum/ember-appuniversum/styles/a-plugins";
-@import "@appuniversum/ember-appuniversum/styles/a-utilities";
-
-// TEMPORARY HACKS AND QUICKFIXES
-@import 'shame';
-*/

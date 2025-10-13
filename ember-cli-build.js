@@ -15,7 +15,7 @@ module.exports = function (defaults) {
         'node_modules/breakpoint-sass/stylesheets',
         'node_modules/gent_styleguide/build/styleguide'
       ]
-    },
+    }
   });
 
   // Comment/Uncomment this to enable/disable Embroider build
@@ -26,6 +26,7 @@ module.exports = function (defaults) {
   // Copy Gent styleguide assets during build
   const path = require('path');
   const fs = require('fs-extra');
+  const sass = require('sass');
   
   const styleguideSource = path.join(__dirname, 'node_modules/gent_styleguide/build/styleguide');
   const assetsDestination = path.join(__dirname, 'public/assets');
@@ -42,6 +43,32 @@ module.exports = function (defaults) {
       fs.copySync(sourceFolder, destFolder);
     }
   });
+
+  // Compile additional SCSS files
+  const includePaths = [
+    path.join(__dirname, 'node_modules'),
+    path.join(__dirname, 'node_modules/breakpoint-sass/stylesheets'),
+    path.join(__dirname, 'node_modules/gent_styleguide/build/styleguide'),
+    path.join(__dirname, 'app/styles')
+  ];
+
+  try {
+    // Compile generic.scss
+    const genericResult = sass.compile(path.join(__dirname, 'app/styles/generic.scss'), {
+      includePaths: includePaths,
+      style: 'compressed'
+    });
+    fs.writeFileSync(path.join(assetsDestination, 'generic.css'), genericResult.css);
+
+    // Compile styleguide.scss  
+    const styleguideResult = sass.compile(path.join(__dirname, 'app/styles/styleguide.scss'), {
+      includePaths: includePaths,
+      style: 'compressed'
+    });
+    fs.writeFileSync(path.join(assetsDestination, 'styleguide.css'), styleguideResult.css);
+  } catch (error) {
+    console.warn('Warning: Could not compile additional SCSS files:', error.message);
+  }
 
   return require('@embroider/compat').compatBuild(app, Webpack, {
     staticAddonTestSupportTrees: true,
