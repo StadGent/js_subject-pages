@@ -52,23 +52,19 @@ module.exports = function (defaults) {
     path.join(__dirname, 'app/styles')
   ];
 
-  try {
-    // Compile generic.scss
-    const genericResult = sass.compile(path.join(__dirname, 'app/styles/generic.scss'), {
-      includePaths: includePaths,
-      style: 'compressed'
-    });
-    fs.writeFileSync(path.join(assetsDestination, 'generic.css'), genericResult.css);
+  // Compile generic.scss
+  const genericResult = sass.compile(path.join(__dirname, 'app/styles/generic.scss'), {
+    loadPaths: includePaths,
+    style: 'compressed'
+  });
+  fs.writeFileSync(path.join(assetsDestination, 'generic.css'), genericResult.css);
 
-    // Compile styleguide.scss  
-    const styleguideResult = sass.compile(path.join(__dirname, 'app/styles/styleguide.scss'), {
-      includePaths: includePaths,
-      style: 'compressed'
-    });
-    fs.writeFileSync(path.join(assetsDestination, 'styleguide.css'), styleguideResult.css);
-  } catch (error) {
-    console.warn('Warning: Could not compile additional SCSS files:', error.message);
-  }
+  // Compile styleguide.scss  
+  const styleguideResult = sass.compile(path.join(__dirname, 'app/styles/styleguide.scss'), {
+    loadPaths: includePaths,
+    style: 'compressed'
+  });
+  fs.writeFileSync(path.join(assetsDestination, 'styleguide.css'), styleguideResult.css);
 
   return require('@embroider/compat').compatBuild(app, Webpack, {
     staticAddonTestSupportTrees: true,
