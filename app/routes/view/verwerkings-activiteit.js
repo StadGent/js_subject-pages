@@ -4,6 +4,7 @@ import fetch from 'fetch';
 
 export default class ViewVerwerkingsActiviteitRoute extends Route {
   @service fastboot;
+  @service breadcrumbs;
 
   queryParams = {
     resource: { refreshModel: true },
@@ -88,5 +89,13 @@ GROUP BY ?verwerking ?id ?description ?processor ?type ?name ?personalDataDescri
     };
 
     return model;
+  }
+
+  afterModel(model) {
+    this.breadcrumbs.set([
+      { label: 'Over Gent & stadsbestuur', url: '/nl/over-gent-stadsbestuur' },
+      { label: 'Verwerkingsregister', url: '/nl/over-gent-stadsbestuur/verwerkingsregister' },
+      { label: model.title || 'Verwerkingsactiviteit', url: null }
+    ]);
   }
 }
