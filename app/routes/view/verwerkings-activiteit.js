@@ -91,11 +91,21 @@ GROUP BY ?verwerking ?id ?description ?processor ?type ?name ?personalDataDescri
     return model;
   }
 
-  afterModel(model) {
-    this.breadcrumbs.set([
-      { label: 'Over Gent & stadsbestuur', url: '/nl/over-gent-stadsbestuur' },
-      { label: 'Verwerkingsregister', url: '/nl/over-gent-stadsbestuur/verwerkingsregister' },
-      { label: model.title || 'Verwerkingsactiviteit', url: null }
-    ]);
+  async afterModel(model) {
+    // Build breadcrumbs dynamically from the menu API using the RDF class URI
+    const success = await this.breadcrumbs.buildFromClass(
+      'http://data.vlaanderen.be/ns/toestemming#VerwerkingsActiviteit',
+      model.title || 'Verwerkingsactiviteit'
+    );
+
+    // Fallback to hardcoded breadcrumbs if menu API fails
+    if (!success) {
+      console.warn('Failed to build breadcrumbs from menu API, using fallback');
+      this.breadcrumbs.set([
+        { label: 'Over Gent & stadsbestuur', url: '/nl/over-gent-stadsbestuur' },
+        { label: 'Verwerkingsregister', url: '/nl/over-gent-stadsbestuur/verwerkingsregister' },
+        { label: model.title || 'Verwerkingsactiviteit', url: null }
+      ]);
+    }
   }
 }
