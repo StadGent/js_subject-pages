@@ -1,0 +1,84 @@
+{
+  "linkset": [
+    {
+      "anchor": "/nl/system/menu/lod/linkset",
+      "item": [
+        {
+          "href": "/nl/nieuws-evenementen",
+          "title": "Nieuws & inspiratie",
+          "hierarchy": [
+            "0"
+          ],
+          "machine-name": [
+            "lod"
+          ]
+        },
+        {
+          "href": "http://schema.org/NewsArticle",
+          "title": "NewsArticle",
+          "hierarchy": [
+            "0",
+            "0"
+          ],
+          "machine-name": [
+            "lod"
+          ]
+        },
+        {
+          "href": "/nl/organisaties",
+          "title": "Organisaties",
+          "hierarchy": [
+            "1"
+          ],
+          "machine-name": [
+            "lod"
+          ]
+        },
+        {
+          "href": "http://schema.org/Organization",
+          "title": "Organization",
+          "hierarchy": [
+            "1",
+            "0"
+          ],
+          "machine-name": [
+            "lod"
+          ]
+        },
+        {
+          "href": "/nl/over-gent-stadsbestuur",
+          "title": "Over Gent & stadsbestuur",
+          "hierarchy": [
+            "2"
+          ],
+          "machine-name": [
+            "lod"
+          ]
+        },
+        {
+          "href": "/nl/over-gent-stadsbestuur/verwerkingsregister",
+          "title": "Verwerkingsregister",
+          "hierarchy": [
+            "2",
+            "0"
+          ],
+          "machine-name": [
+            "lod"
+          ]
+        },
+        {
+          "href": "http://data.vlaanderen.be/ns/toestemming#VerwerkingsActiviteit",
+          "title": "VerwerkingsActiviteit",
+          "hierarchy": [
+            "2",
+            "0",
+            "0"
+          ],
+          "machine-name": [
+            "lod"
+          ]
+        }
+      ]
+    }
+  ]
+}
