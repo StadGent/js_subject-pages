@@ -16,6 +16,9 @@ module.exports = function (environment) {
       defaultQuery: '{{YASGUI_DEFAULT_QUERY}}',
       extraPrefixes: '{{YASGUI_EXTRA_PREFIXES}}',
     },
+    menu: {
+      linksetUrl: '{{MENU_LINKSET_URL}}',
+    },
     fastboot: {
       hostWhitelist: [/^localhost(:[0-9]*)?/, 'localhost', /^.*$/],
     },
@@ -41,6 +44,10 @@ module.exports = function (environment) {
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
     ENV.metis.baseUrl = process.env.EMBER_METIS_BASE_URL || 'https://qa.stad.gent/';
     ENV.metis.serviceBase = process.env.EMBER_METIS_SERVICE_BASE || '/data';
+    // Use local static JSON file by default in development
+    // Can be overridden with EMBER_MENU_LINKSET_URL env variable
+    // Note: public files are served with serviceBase prefix
+    ENV.menu.linksetUrl = process.env.EMBER_MENU_LINKSET_URL || `${ENV.metis.serviceBase}/menu-lod-linkset.json`;
   }
 
   if (environment === 'test') {
