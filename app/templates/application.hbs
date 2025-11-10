@@ -6,7 +6,9 @@
 <SiteHeader @title={{this.title}} />
 {{/unless}}
 
-{{outlet}}
+<main class="info-page">
+  <article class="detail-layout">{{outlet}}</article>
+</main>
 
 {{#unless this.isEmbedded}}
 <SiteFooter />

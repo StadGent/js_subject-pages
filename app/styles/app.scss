@@ -18,3 +18,8 @@
  // Import Gent styleguide
 $styleguide-dir: '../assets' !default;
 @import "sass/main_cli";
+
+table {
+    table-layout: fixed;
+    width: 100%;
+}

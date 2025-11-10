@@ -1,97 +1,92 @@
 {{page-title (concat "Stad Gent | " @model.title)}}
 
-<main class="info-page">
-  <article class="detail-layout">
+{{! Content Header Component }}
+<div class="content-header-container primary dark-background overlap">
+  <div>
+    <h1>{{@model.title}}</h1>
+    <div class="summary-text">
+      <p>{{@model.beschrijving}}</p>
+    </div>
+  </div>
+</div>
+
+{{! Summary Component }}
+<aside class="summary-box">
+  <h2 class="visually-hidden">Samenvatting</h2>
+  <dl>
+    <dt>Categorie</dt>
+    <dd>{{@model.categorie}}</dd>
+    <dt>Verwerkende dienst</dt>
+    <dd>{{@model.verwerkers}}</dd>
+    <dt>Rechtmatigheid</dt>
+    <dd>{{@model.rechtmatigheid}}</dd>
+  </dl>
+</aside>
+
+{{! Content sections }}
+<div class="content-container">
+  
+  {{! Gegevens sectie }}
+  <section>
+    <h2>Gegevens</h2>
+
+    {{#if @model.persoonsgegevensBeschrijving}}
+      <h3>Over wie?</h3>
+      <p>{{@model.persoonsgegevensBeschrijving}}</p>
+    {{/if}}
     
-    {{! Content Header Component }}
-    <div class="content-header-container primary dark-background overlap">
-      <div>
-        <h1>{{@model.title}}</h1>
-        <div class="summary-text">
-          <p>{{@model.beschrijving}}</p>
-        </div>
-      </div>
-    </div>
+    {{#if @model.persoonsgegevens}}
+      <h3>Welke persoonsgegevens?</h3>
+      <ul>
+        {{#each @model.persoonsgegevens as |gegeven|}}
+          <li>{{gegeven}}</li>
+        {{/each}}
+      </ul>
+    {{/if}}
 
-    {{! Summary Component }}
-    <aside class="summary-box">
-      <h2 class="visually-hidden">Samenvatting</h2>
-      <dl>
-        <dt>Categorie</dt>
-        <dd>{{@model.categorie}}</dd>
-        <dt>Verwerkende dienst</dt>
-        <dd>{{@model.verwerkers}}</dd>
-        <dt>Rechtmatigheid</dt>
-        <dd>{{@model.rechtmatigheid}}</dd>
-      </dl>
-    </aside>
-
-    {{! Content sections }}
-    <div class="content-container">
-      
-      {{! Gegevens sectie }}
-      <section>
-        <h2>Gegevens</h2>
-
-        {{#if @model.persoonsgegevensBeschrijving}}
-          <h3>Over wie?</h3>
-          <p>{{@model.persoonsgegevensBeschrijving}}</p>
-        {{/if}}
-        
-        {{#if @model.persoonsgegevens}}
-          <h3>Welke persoonsgegevens?</h3>
-          <ul>
-            {{#each @model.persoonsgegevens as |gegeven|}}
-              <li>{{gegeven}}</li>
-            {{/each}}
-          </ul>
-        {{/if}}
-
-        {{#if @model.gevoeligePersoonsgegevens}}
-          <h3>Welke gevoelige persoonsgegevens?</h3>
-          <ul>
-            {{#each @model.gevoeligePersoonsgegevens as |gegeven|}}
-              <li>{{gegeven}}</li>
-            {{/each}}
-          </ul>
-          {{#if @model.gevoeligePersoonsgegevensBeschrijving}}
-            <p>{{@model.gevoeligePersoonsgegevensBeschrijving}}</p>
-          {{/if}}
-        {{else}}
-          <h3>Welke gevoelige persoonsgegevens?</h3>
-          <p>Er zijn geen gevoelige persoonsgegevens van toepassing.</p>
-        {{/if}}
-      </section>
-
-      {{! Rechtmatigheid sectie }}
-      <section>
-        <h2>Rechtmatigheid</h2>
-        <h3>Type</h3>
-        <p>{{@model.rechtmatigheid}}</p>
-        {{#if @model.rechtmatigheidVerduidelijking}}
-          <h3>Verduidelijking</h3>
-          <p>{{@model.rechtmatigheidVerduidelijking}}</p>
-        {{/if}}
-      </section>
-
-      {{! Ontvangers sectie }}
-      {{#if @model.toegangVerleend}}
-        <section>
-          <h2>Ontvangers</h2>
-          <ul>
-            {{#each @model.toegangVerleend as |ontvanger|}}
-              <li>{{ontvanger}}</li>
-            {{/each}}
-          </ul>
-        </section>
+    {{#if @model.gevoeligePersoonsgegevens}}
+      <h3>Welke gevoelige persoonsgegevens?</h3>
+      <ul>
+        {{#each @model.gevoeligePersoonsgegevens as |gegeven|}}
+          <li>{{gegeven}}</li>
+        {{/each}}
+      </ul>
+      {{#if @model.gevoeligePersoonsgegevensBeschrijving}}
+        <p>{{@model.gevoeligePersoonsgegevensBeschrijving}}</p>
       {{/if}}
-      
-      {{! Bewaartermijn sectie }}
-      <section>
-        <h2>Bewaartermijn</h2>
-        <p>{{@model.bewaartermijn}}</p>
-      </section>
+    {{else}}
+      <h3>Welke gevoelige persoonsgegevens?</h3>
+      <p>Er zijn geen gevoelige persoonsgegevens van toepassing.</p>
+    {{/if}}
+  </section>
 
-    </div>
-  </article>
-</main>
+  {{! Rechtmatigheid sectie }}
+  <section>
+    <h2>Rechtmatigheid</h2>
+    <h3>Type</h3>
+    <p>{{@model.rechtmatigheid}}</p>
+    {{#if @model.rechtmatigheidVerduidelijking}}
+      <h3>Verduidelijking</h3>
+      <p>{{@model.rechtmatigheidVerduidelijking}}</p>
+    {{/if}}
+  </section>
+
+  {{! Ontvangers sectie }}
+  {{#if @model.toegangVerleend}}
+    <section>
+      <h2>Ontvangers</h2>
+      <ul>
+        {{#each @model.toegangVerleend as |ontvanger|}}
+          <li>{{ontvanger}}</li>
+        {{/each}}
+      </ul>
+    </section>
+  {{/if}}
+  
+  {{! Bewaartermijn sectie }}
+  <section>
+    <h2>Bewaartermijn</h2>
+    <p>{{@model.bewaartermijn}}</p>
+  </section>
+
+</div>
