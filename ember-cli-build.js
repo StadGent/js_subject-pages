@@ -15,57 +15,13 @@ module.exports = function (defaults) {
         'node_modules/breakpoint-sass/stylesheets',
         'node_modules/gent_styleguide/build/styleguide'
       ]
-    }
+    },
   });
 
   // Comment/Uncomment this to enable/disable Embroider build
   // return app.toTree();
 
   const { Webpack } = require('@embroider/webpack');
-  
-  // Copy Gent styleguide assets during build
-  const path = require('path');
-  const fs = require('fs-extra');
-  const sass = require('sass');
-  
-  const styleguideSource = path.join(__dirname, 'node_modules/gent_styleguide/build/styleguide');
-  const assetsDestination = path.join(__dirname, 'public/assets');
-  
-  // Copy all gent_styleguide assets (fonts, googlefonts, img, js)
-  const assetFolders = ['fonts', 'googlefonts', 'img', 'js'];
-  
-  assetFolders.forEach(folder => {
-    const sourceFolder = path.join(styleguideSource, folder);
-    const destFolder = path.join(assetsDestination, folder);
-    
-    if (fs.existsSync(sourceFolder)) {
-      fs.ensureDirSync(destFolder);
-      fs.copySync(sourceFolder, destFolder);
-    }
-  });
-
-  // Compile additional SCSS files
-  const includePaths = [
-    path.join(__dirname, 'node_modules'),
-    path.join(__dirname, 'node_modules/breakpoint-sass/stylesheets'),
-    path.join(__dirname, 'node_modules/gent_styleguide/build/styleguide'),
-    path.join(__dirname, 'app/styles')
-  ];
-
-  // Compile generic.scss
-  const genericResult = sass.compile(path.join(__dirname, 'app/styles/generic.scss'), {
-    loadPaths: includePaths,
-    style: 'compressed'
-  });
-  fs.writeFileSync(path.join(assetsDestination, 'generic.css'), genericResult.css);
-
-  // Compile styleguide.scss  
-  const styleguideResult = sass.compile(path.join(__dirname, 'app/styles/styleguide.scss'), {
-    loadPaths: includePaths,
-    style: 'compressed'
-  });
-  fs.writeFileSync(path.join(assetsDestination, 'styleguide.css'), styleguideResult.css);
-
   return require('@embroider/compat').compatBuild(app, Webpack, {
     staticAddonTestSupportTrees: true,
     staticAddonTrees: true,
