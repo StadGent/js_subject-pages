@@ -28,3 +28,8 @@ table.dataTable tbody th {
   word-break: break-word !important;
   text-align: left;
 }
+
+/* Fix word breaking for long URLs */
+.au-u-word-break {
+  word-wrap: break-word;
+}
