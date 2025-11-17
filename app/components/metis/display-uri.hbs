@@ -21,15 +21,15 @@
   <p class="au-u-muted">{{this.description}}</p>
 {{/if}}
 
-<ul class="au-c-list-horizontal au-u-margin-top-tiny">
-  <li class="au-c-list-horizontal__item">
+<ul class="inline">
+  <li>
     <AuLinkExternal href={{@uri}}>
       {{t "display-uri.follow-external-url"}}
     </AuLinkExternal>
   </li>
 
   {{#unless this.isLocal}}
-    <li class="au-c-list-horizontal__item">
+    <li>
       <AuLink
         @route="external"
         @query={{hash resource=@uri}}
@@ -41,7 +41,7 @@
   {{/unless}}
 
   {{#if this.hasShort}}
-    <li class="au-c-list-horizontal__item">
+    <li>
       <AuButton
         @skin="link"
         @icon={{if this.showShort "link" "draft"}}
