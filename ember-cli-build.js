@@ -16,6 +16,15 @@ module.exports = function (defaults) {
         'node_modules/gent_styleguide/build/styleguide'
       ]
     },
+    fingerprint: {
+      exclude: [
+        'assets/js',
+        'assets/vendor',
+        'assets/fonts',
+        'assets/img',
+        'assets/googlefonts'
+      ]
+    },
   });
 
   // Comment/Uncomment this to enable/disable Embroider build
