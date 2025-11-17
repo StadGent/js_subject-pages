@@ -30,8 +30,8 @@ module.exports = function (defaults) {
   const styleguideSource = path.join(__dirname, 'node_modules/gent_styleguide/build/styleguide');
   const assetsDestination = path.join(__dirname, 'public/assets');
 
-  // Copy all gent_styleguide assets (fonts, googlefonts, img, js)
-  const assetFolders = ['fonts', 'googlefonts', 'img', 'js'];
+  // Copy all gent_styleguide assets (fonts, googlefonts, img, js, vendor)
+  const assetFolders = ['fonts', 'googlefonts', 'img', 'js', 'vendor'];
 
   assetFolders.forEach(folder => {
     const sourceFolder = path.join(styleguideSource, folder);

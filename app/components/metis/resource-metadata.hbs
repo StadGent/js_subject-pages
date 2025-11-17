@@ -1,0 +1,157 @@
+<div class="au-o-region">
+  <AuHeading @level="2" @skin="3" class="au-u-margin-bottom-small">
+    {{this.t "sections.direct-triples.header"}}
+  </AuHeading>
+  <p class="au-u-margin-bottom">
+    {{this.t "sections.direct-triples.subheader"}}
+  </p>
+
+  {{#if @model.directed.triples}}
+    {{! Desktop table version }}
+    <div class="responsive-table">
+      <div class="table-wrapper">
+        <table about={{@model.directed.subject}}>
+          <thead>
+            <tr>
+              <th>{{this.t "table.columns.property"}}</th>
+              <th>{{this.t "table.columns.value"}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#if @controller.isLoadingDirected}}
+              <tr>
+                <td>{{this.t "table.loading"}}</td>
+                <td></td>
+              </tr>
+            {{else}}
+              {{#each @model.directed.triples as |triple|}}
+                {{#if (eq triple.object.type "uri")}}
+                  <tr property={{triple.predicate}} resource={{triple.object.value}}>
+                    <td><Metis::DisplayUri @uri={{triple.predicate}} @type="predicate"/></td>
+                    <td><Metis::DisplayUri @uri={{triple.object.value}} @type="object"/></td>
+                  </tr>
+                {{else}}
+                  <tr property={{triple.predicate}} content={{triple.object.value}}>
+                    <td><Metis::DisplayUri @uri={{triple.predicate}} @type="predicate"/></td>
+                    <td><Metis::DisplayLiteral @value={{triple.object.value}} @language={{get triple.object "xml:lang"}} /></td>
+                  </tr>
+                {{/if}}
+              {{/each}}
+            {{/if}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    {{! Mobile swiper version }}
+    <div class="table-swiper-wrapper">
+      <div class="table-swiper">
+        <div class="table-swiper__fixed-column">
+          <dl>
+            <dt class="column-header">{{this.t "table.columns.property"}}</dt>
+            {{#each @model.directed.triples as |triple index|}}
+              <dd class="cell-row" data-row-index={{index}}>
+                <Metis::DisplayUri @uri={{triple.predicate}} @type="predicate"/>
+              </dd>
+            {{/each}}
+          </dl>
+        </div>
+
+        <div class="swiper">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide">
+              <dl>
+                <dt class="column-header">{{this.t "table.columns.value"}}</dt>
+                {{#each @model.directed.triples as |triple index|}}
+                  <dd class="cell-row" data-row-index={{index}}>
+                    {{#if (eq triple.object.type "uri")}}
+                      <Metis::DisplayUri @uri={{triple.object.value}} @type="object"/>
+                    {{else}}
+                      <Metis::DisplayLiteral @value={{triple.object.value}} @language={{get triple.object "xml:lang"}} />
+                    {{/if}}
+                  </dd>
+                {{/each}}
+              </dl>
+            </div>
+          </div>
+        </div>
+
+        <div class="swiper-pagination"></div>
+        <div class="swiper-button-prev custom-prev">
+          <i class="icon icon-arrow-left"></i>
+        </div>
+        <div class="swiper-button-next custom-next">
+          <i class="icon icon-arrow-right"></i>
+        </div>
+      </div>
+    </div>
+
+    <Metis::Pagination
+      @count={{@model.directed.count}}
+      @size={{@controller.directedPageSize}}
+      @page={{@controller.directedPageNumber}}
+      @selectPage={{@controller.selectDirectedPage}}
+    />
+  {{else}}
+    <p>
+      <AuHelpText @skin="tertiary">
+        {{this.t "sections.direct-triples.not-found"}}
+      </AuHelpText>
+    </p>
+  {{/if}}
+</div>
+
+<AuHeading @level="3" @skin="2" class="au-u-margin-bottom-small">
+  {{this.t "sections.inverse-triples.header"}}
+</AuHeading>
+<p class="au-u-margin-bottom">
+  {{this.t "sections.inverse-triples.subheader"}}
+</p>
+
+<div class="au-u-margin-bottom-large">
+  {{#if @model.inverse.triples}}
+    <AuTable>
+      <:header>
+        <tr>
+          <th>{{this.t "table.columns.property"}}</th>
+          <th>{{this.t "table.columns.subject"}}</th>
+        </tr>
+      </:header>
+      <:body>
+        {{#if @controller.isLoadingInverse}}
+          <tr>
+            <td>
+              {{this.t "table.loading"}}
+            </td>
+            <td></td>
+          </tr>
+        {{else}}
+          {{#each @model.inverse.triples as |triple|}}
+            <tr resource={{triple.subject}}>
+              <td property={{triple.predicate}} resource={{triple.object}}>
+                <Metis::DisplayUri @uri={{triple.predicate}} @type="predicate"/>
+              </td>
+              <td>
+                <Metis::DisplayUri @uri={{triple.subject}} @type="subject"/>
+              </td>
+            </tr>
+          {{/each}}
+        {{/if}}
+      </:body>
+    </AuTable>
+    {{#if @model.inverse.triples}}
+      <Metis::Pagination
+        @count={{@model.inverse.count}}
+        @size={{@controller.inversePageSize}}
+        @page={{@controller.inversePageNumber}}
+        @selectPage={{@controller.selectInversePage}}
+      />
+    {{/if}}
+  {{else}}
+    <p>
+      <AuHelpText @skin="tertiary">
+        {{this.t "sections.inverse-triples.not-found"}}
+      </AuHelpText>
+    </p>
+  {{/if}}
+</div>
