@@ -1,7 +1,7 @@
-<nav class="pager" aria-labelledby="pagination-heading">
-  <h2 id="pagination-heading" class="visually-hidden">Pagination</h2>
-  <ul>
-    {{#if this.hasMultiplePages}}
+{{#if this.hasMultiplePages}}
+  <nav class="pager" aria-labelledby="pagination-heading">
+    <h2 id="pagination-heading" class="visually-hidden">Pagination</h2>
+    <ul>
       {{#unless this.isFirstPage}}
         <li class="previous">
           <a href="#" class="standalone-link back" {{on "click" this.previousPage}}>
@@ -10,16 +10,7 @@
           </a>
         </li>
       {{/unless}}
-    {{/if}}
 
-    <li>
-      <span class="visually-hidden">{{t "pagination.results"}} </span>
-      <strong>{{this.startItem}} - {{this.endItem}}</strong>
-      {{t "pagination.of"}}
-      {{this.count}}
-    </li>
-
-    {{#if this.hasMultiplePages}}
       {{#unless this.isLastPage}}
         <li class="next">
           <a href="#" class="standalone-link" {{on "click" this.nextPage}}>
@@ -28,6 +19,6 @@
           </a>
         </li>
       {{/unless}}
-    {{/if}}
-  </ul>
-</nav>
+    </ul>
+  </nav>
+{{/if}}
