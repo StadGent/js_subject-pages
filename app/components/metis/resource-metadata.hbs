@@ -108,45 +108,85 @@
   {{this.t "sections.inverse-triples.subheader"}}
 </p>
 
-<div class="au-u-margin-bottom-large">
   {{#if @model.inverse.triples}}
-    <AuTable>
-      <:header>
-        <tr>
-          <th>{{this.t "table.columns.property"}}</th>
-          <th>{{this.t "table.columns.subject"}}</th>
-        </tr>
-      </:header>
-      <:body>
-        {{#if @controller.isLoadingInverse}}
-          <tr>
-            <td>
-              {{this.t "table.loading"}}
-            </td>
-            <td></td>
-          </tr>
-        {{else}}
-          {{#each @model.inverse.triples as |triple|}}
-            <tr resource={{triple.subject}}>
-              <td property={{triple.predicate}} resource={{triple.object}}>
-                <Metis::DisplayUri @uri={{triple.predicate}} @type="predicate"/>
-              </td>
-              <td>
-                <Metis::DisplayUri @uri={{triple.subject}} @type="subject"/>
-              </td>
+    {{! Desktop table version }}
+    <div class="responsive-table">
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>{{this.t "table.columns.property"}}</th>
+              <th>{{this.t "table.columns.subject"}}</th>
             </tr>
-          {{/each}}
-        {{/if}}
-      </:body>
-    </AuTable>
-    {{#if @model.inverse.triples}}
-      <Metis::Pagination
-        @count={{@model.inverse.count}}
-        @size={{@controller.inversePageSize}}
-        @page={{@controller.inversePageNumber}}
-        @selectPage={{@controller.selectInversePage}}
-      />
-    {{/if}}
+          </thead>
+          <tbody>
+            {{#if @controller.isLoadingInverse}}
+              <tr>
+                <td>{{this.t "table.loading"}}</td>
+                <td></td>
+              </tr>
+            {{else}}
+              {{#each @model.inverse.triples as |triple|}}
+                <tr resource={{triple.subject}}>
+                  <td property={{triple.predicate}} resource={{triple.object}}>
+                    <Metis::DisplayUri @uri={{triple.predicate}} @type="predicate"/>
+                  </td>
+                  <td>
+                    <Metis::DisplayUri @uri={{triple.subject}} @type="subject"/>
+                  </td>
+                </tr>
+              {{/each}}
+            {{/if}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    {{! Mobile swiper version }}
+    <div class="table-swiper-wrapper">
+      <div class="table-swiper">
+        <div class="table-swiper__fixed-column">
+          <dl>
+            <dt class="column-header">{{this.t "table.columns.property"}}</dt>
+            {{#each @model.inverse.triples as |triple index|}}
+              <dd class="cell-row" data-row-index={{index}}>
+                <Metis::DisplayUri @uri={{triple.predicate}} @type="predicate"/>
+              </dd>
+            {{/each}}
+          </dl>
+        </div>
+
+        <div class="swiper">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide">
+              <dl>
+                <dt class="column-header">{{this.t "table.columns.subject"}}</dt>
+                {{#each @model.inverse.triples as |triple index|}}
+                  <dd class="cell-row" data-row-index={{index}}>
+                    <Metis::DisplayUri @uri={{triple.subject}} @type="subject"/>
+                  </dd>
+                {{/each}}
+              </dl>
+            </div>
+          </div>
+        </div>
+
+        <div class="swiper-pagination"></div>
+        <div class="swiper-button-prev custom-prev">
+          <i class="icon icon-arrow-left"></i>
+        </div>
+        <div class="swiper-button-next custom-next">
+          <i class="icon icon-arrow-right"></i>
+        </div>
+      </div>
+    </div>
+
+    <Metis::Pagination
+      @count={{@model.inverse.count}}
+      @size={{@controller.inversePageSize}}
+      @page={{@controller.inversePageNumber}}
+      @selectPage={{@controller.selectInversePage}}
+    />
   {{else}}
     <p>
       <AuHelpText @skin="tertiary">
@@ -154,4 +194,3 @@
       </AuHelpText>
     </p>
   {{/if}}
-</div>
