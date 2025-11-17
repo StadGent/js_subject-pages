@@ -10,6 +10,10 @@ module.exports = function (environment) {
       routes: {},
       baseUrl: '{{METIS_BASE_URL}}',
       serviceBase: '{{METIS_SERVICE_BASE}}',
+      pageSize: {
+        directed: 5,
+        inverse: 5,
+      },
     },
     yasgui: {
       // NOTE: look at app/modifiers/yasgui.js when changing this variable
