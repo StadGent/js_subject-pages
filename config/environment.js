@@ -11,8 +11,8 @@ module.exports = function (environment) {
       baseUrl: '{{METIS_BASE_URL}}',
       serviceBase: '{{METIS_SERVICE_BASE}}',
       pageSize: {
-        directed: 5,
-        inverse: 5,
+        directed: 50,
+        inverse: 50,
       },
     },
     yasgui: {
