@@ -2,6 +2,42 @@ import Route from '@ember/routing/route';
 import { service } from '@ember/service';
 import fetch from 'fetch';
 
+/**
+ * Natural sort comparator for strings
+ * Handles alphanumeric sorting (e.g., "3-00", "K.", "N2:", "N3:")
+ */
+function naturalSort(a, b) {
+  // Split strings into parts (numbers and non-numbers)
+  const splitRegex = /(\d+)/;
+  const partsA = a.split(splitRegex);
+  const partsB = b.split(splitRegex);
+
+  const maxLength = Math.max(partsA.length, partsB.length);
+
+  for (let i = 0; i < maxLength; i++) {
+    const partA = partsA[i] || '';
+    const partB = partsB[i] || '';
+
+    // Check if both parts are numeric
+    const numA = parseInt(partA, 10);
+    const numB = parseInt(partB, 10);
+
+    if (!isNaN(numA) && !isNaN(numB)) {
+      // Compare numerically
+      if (numA !== numB) {
+        return numA - numB;
+      }
+    } else {
+      // Compare lexicographically
+      if (partA !== partB) {
+        return partA.localeCompare(partB);
+      }
+    }
+  }
+
+  return 0;
+}
+
 export default class ViewVerwerkingsActiviteitRoute extends Route {
   @service fastboot;
   @service breadcrumbs;
@@ -69,7 +105,7 @@ GROUP BY ?verwerking ?id ?description ?processor ?type ?name ?personalDataDescri
     const getValue = (field) => bindings[field]?.value || '';
     const getValueSplit = (field) => {
       const value = getValue(field);
-      return value ? value.split(',') : [];
+      return value ? value.split(',').sort(naturalSort) : [];
     };
     const model = {
       id: getValue('id'),
