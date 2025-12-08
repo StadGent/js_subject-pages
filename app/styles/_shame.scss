@@ -34,6 +34,28 @@ table.dataTable tbody th {
   word-wrap: break-word;
 }
 
+/* Set responsive table width - break out of container */
+@media (min-width: 1200px) {
+  .responsive-table {
+    width: 1171px;
+    min-width: 1171px;
+    max-width: none;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-left: calc(.1rem + 8.33333%);
+
+    .table-wrapper {
+      width: 100%;
+    }
+
+    table {
+      width: 100%;
+      table-layout: fixed;
+    }
+  }
+}
+
 hr {
   display: none;
 }
