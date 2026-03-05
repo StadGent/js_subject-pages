@@ -1,14 +1,47 @@
 import ParentFallbackRoute from 'ember-metis/routes/fallback.js';
+import fetchUriInfo from 'ember-metis/utils/fetch-uri-info';
 import { service } from '@ember/service';
+
+function alternateSchemeSubject(subject) {
+  if (subject.startsWith('https://')) return `http://${subject.slice(8)}`;
+  if (subject.startsWith('http://')) return `https://${subject.slice(7)}`;
+  return null;
+}
 
 export default class FallbackRoute extends ParentFallbackRoute {
   @service breadcrumbs;
   @service menu;
 
   async model(args) {
-    const { path } = args;
+    const { path, directedPageNumber, directedPageSize, inversePageNumber, inversePageSize } = args;
     args.path = `id/${path}`;
-    return super.model(args);
+
+    const model = await super.model(args);
+
+    if (model.directed?.triples?.length) {
+      return model;
+    }
+
+    // No results — try the alternate scheme (http <-> https)
+    const primarySubject = model.directed?.subject;
+    const altSubject = primarySubject && alternateSchemeSubject(primarySubject);
+    if (!altSubject) return model;
+
+    const serviceBase =
+      this.env.metis.serviceBase === '{{METIS_SERVICE_BASE}}'
+        ? '/'
+        : this.env.metis.serviceBase;
+
+    const [altDirected, altInverse] = await Promise.all([
+      fetchUriInfo(this.fastboot, altSubject, directedPageNumber, directedPageSize, 'direct', serviceBase),
+      fetchUriInfo(this.fastboot, altSubject, inversePageNumber, inversePageSize, 'inverse', serviceBase),
+    ]);
+
+    if (altDirected.triples?.length) {
+      return { directed: altDirected, inverse: altInverse };
+    }
+
+    return model;
   }
 
   async afterModel(model) {
