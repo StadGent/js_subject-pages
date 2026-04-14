@@ -13,8 +13,8 @@ module.exports = function (defaults) {
     sassOptions: {
       includePaths: [
         'node_modules/breakpoint-sass/stylesheets',
-        'node_modules/gent_styleguide/build/styleguide'
-      ]
+        'node_modules/gent_styleguide/build/styleguide',
+      ],
     },
     fingerprint: {
       exclude: [
@@ -22,8 +22,8 @@ module.exports = function (defaults) {
         'assets/vendor',
         'assets/fonts',
         'assets/img',
-        'assets/googlefonts'
-      ]
+        'assets/googlefonts',
+      ],
     },
   });
 
@@ -36,13 +36,16 @@ module.exports = function (defaults) {
   const path = require('path');
   const fs = require('fs-extra');
 
-  const styleguideSource = path.join(__dirname, 'node_modules/gent_styleguide/build/styleguide');
+  const styleguideSource = path.join(
+    __dirname,
+    'node_modules/gent_styleguide/build/styleguide',
+  );
   const assetsDestination = path.join(__dirname, 'public/assets');
 
   // Copy all gent_styleguide assets (fonts, googlefonts, img, js, vendor)
   const assetFolders = ['fonts', 'googlefonts', 'img', 'js', 'vendor'];
 
-  assetFolders.forEach(folder => {
+  assetFolders.forEach((folder) => {
     const sourceFolder = path.join(styleguideSource, folder);
     const destFolder = path.join(assetsDestination, folder);
 

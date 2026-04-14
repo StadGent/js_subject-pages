@@ -119,9 +119,11 @@ GROUP BY ?verwerking ?id ?description ?processor ?type ?name ?personalDataDescri
       persoonsgegevens: getValueSplit('personalData'),
       persoonsgegevensBeschrijving: getValue('personalDataDescription'),
       gevoeligePersoonsgegevens: getValueSplit('sensitivePersonalData'),
-      gevoeligePersoonsgegevensBeschrijving: getValue('sensitivePersonalDataDescription'),
+      gevoeligePersoonsgegevensBeschrijving: getValue(
+        'sensitivePersonalDataDescription',
+      ),
       toegangVerleend: getValueSplit('grantees'),
-      resource: resource
+      resource: resource,
     };
 
     return model;
@@ -131,16 +133,22 @@ GROUP BY ?verwerking ?id ?description ?processor ?type ?name ?personalDataDescri
     // Build breadcrumbs dynamically from the menu API using the RDF class URI
     const success = await this.breadcrumbs.buildFromClass(
       'http://data.vlaanderen.be/ns/toestemming#VerwerkingsActiviteit',
-      model.title || 'Verwerkingsactiviteit'
+      model.title || 'Verwerkingsactiviteit',
     );
 
     // Fallback to hardcoded breadcrumbs if menu API fails
     if (!success) {
       console.warn('Failed to build breadcrumbs from menu API, using fallback');
       this.breadcrumbs.set([
-        { label: 'Over Gent & stadsbestuur', url: '/nl/over-gent-stadsbestuur' },
-        { label: 'Verwerkingsregister', url: '/nl/over-gent-stadsbestuur/verwerkingsregister' },
-        { label: model.title || 'Verwerkingsactiviteit', url: null }
+        {
+          label: 'Over Gent & stadsbestuur',
+          url: '/nl/over-gent-stadsbestuur',
+        },
+        {
+          label: 'Verwerkingsregister',
+          url: '/nl/over-gent-stadsbestuur/verwerkingsregister',
+        },
+        { label: model.title || 'Verwerkingsactiviteit', url: null },
       ]);
     }
   }

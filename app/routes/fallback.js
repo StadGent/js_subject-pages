@@ -13,7 +13,13 @@ export default class FallbackRoute extends ParentFallbackRoute {
   @service menu;
 
   async model(args) {
-    const { path, directedPageNumber, directedPageSize, inversePageNumber, inversePageSize } = args;
+    const {
+      path,
+      directedPageNumber,
+      directedPageSize,
+      inversePageNumber,
+      inversePageSize,
+    } = args;
     args.path = `id/${path}`;
 
     const model = await super.model(args);
@@ -33,8 +39,22 @@ export default class FallbackRoute extends ParentFallbackRoute {
         : this.env.metis.serviceBase;
 
     const [altDirected, altInverse] = await Promise.all([
-      fetchUriInfo(this.fastboot, altSubject, directedPageNumber, directedPageSize, 'direct', serviceBase),
-      fetchUriInfo(this.fastboot, altSubject, inversePageNumber, inversePageSize, 'inverse', serviceBase),
+      fetchUriInfo(
+        this.fastboot,
+        altSubject,
+        directedPageNumber,
+        directedPageSize,
+        'direct',
+        serviceBase,
+      ),
+      fetchUriInfo(
+        this.fastboot,
+        altSubject,
+        inversePageNumber,
+        inversePageSize,
+        'inverse',
+        serviceBase,
+      ),
     ]);
 
     if (altDirected.triples?.length) {
@@ -49,7 +69,7 @@ export default class FallbackRoute extends ParentFallbackRoute {
     const findTripleValue = (predicate) => {
       if (model.directed?.triples) {
         const triple = model.directed.triples.find(
-          t => t.predicate === predicate
+          (t) => t.predicate === predicate,
         );
         return triple?.object?.value;
       }
@@ -60,21 +80,24 @@ export default class FallbackRoute extends ParentFallbackRoute {
     const findAllTripleValues = (predicate) => {
       if (model.directed?.triples) {
         return model.directed.triples
-          .filter(t => t.predicate === predicate)
-          .map(t => t.object?.value)
+          .filter((t) => t.predicate === predicate)
+          .map((t) => t.object?.value)
           .filter(Boolean);
       }
       return [];
     };
 
     // Probeer verschillende properties voor de titel
-    let title = findTripleValue('http://schema.org/name')
-      || findTripleValue('http://schema.org/headline')
-      || model.directed?.subject
-      || 'Linked Data';
+    let title =
+      findTripleValue('http://schema.org/name') ||
+      findTripleValue('http://schema.org/headline') ||
+      model.directed?.subject ||
+      'Linked Data';
 
     // Detecteer RDF type(s) van deze resource
-    const rdfTypes = findAllTripleValues('http://www.w3.org/1999/02/22-rdf-syntax-ns#type');
+    const rdfTypes = findAllTripleValues(
+      'http://www.w3.org/1999/02/22-rdf-syntax-ns#type',
+    );
     console.log('Detected RDF types:', rdfTypes);
 
     // Verzamel alle mogelijke breadcrumb paden voor de verschillende types
@@ -85,9 +108,13 @@ export default class FallbackRoute extends ParentFallbackRoute {
         breadcrumbCandidates.push({
           type: rdfType,
           items: menuItems,
-          depth: menuItems.length
+          depth: menuItems.length,
         });
-        console.log(`Found breadcrumbs for ${rdfType}:`, menuItems, `(depth: ${menuItems.length})`);
+        console.log(
+          `Found breadcrumbs for ${rdfType}:`,
+          menuItems,
+          `(depth: ${menuItems.length})`,
+        );
       }
     }
 
@@ -95,16 +122,16 @@ export default class FallbackRoute extends ParentFallbackRoute {
     if (breadcrumbCandidates.length > 0) {
       breadcrumbCandidates.sort((a, b) => b.depth - a.depth);
       const best = breadcrumbCandidates[0];
-      console.log(`Using breadcrumbs for type: ${best.type} (depth: ${best.depth})`);
+      console.log(
+        `Using breadcrumbs for type: ${best.type} (depth: ${best.depth})`,
+      );
 
       const breadcrumbs = [...best.items, { label: title, url: null }];
       this.breadcrumbs.set(breadcrumbs);
     } else {
       // Als geen breadcrumbs gevonden, gebruik generieke fallback
       console.log('No breadcrumbs found for types, using generic fallback');
-      this.breadcrumbs.set([
-        { label: title, url: null }
-      ]);
+      this.breadcrumbs.set([{ label: title, url: null }]);
     }
   }
 }
