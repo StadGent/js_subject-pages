@@ -1,42 +1,7 @@
 import Route from '@ember/routing/route';
 import { service } from '@ember/service';
 import fetch from 'fetch';
-
-/**
- * Natural sort comparator for strings
- * Handles alphanumeric sorting (e.g., "3-00", "K.", "N2:", "N3:")
- */
-function naturalSort(a, b) {
-  // Split strings into parts (numbers and non-numbers)
-  const splitRegex = /(\d+)/;
-  const partsA = a.split(splitRegex);
-  const partsB = b.split(splitRegex);
-
-  const maxLength = Math.max(partsA.length, partsB.length);
-
-  for (let i = 0; i < maxLength; i++) {
-    const partA = partsA[i] || '';
-    const partB = partsB[i] || '';
-
-    // Check if both parts are numeric
-    const numA = parseInt(partA, 10);
-    const numB = parseInt(partB, 10);
-
-    if (!isNaN(numA) && !isNaN(numB)) {
-      // Compare numerically
-      if (numA !== numB) {
-        return numA - numB;
-      }
-    } else {
-      // Compare lexicographically
-      if (partA !== partB) {
-        return partA.localeCompare(partB);
-      }
-    }
-  }
-
-  return 0;
-}
+import { naturalSort } from 'js_subject-pages/utils/natural-sort';
 
 export default class ViewVerwerkingsActiviteitRoute extends Route {
   @service fastboot;
@@ -48,39 +13,39 @@ export default class ViewVerwerkingsActiviteitRoute extends Route {
 
   async model({ resource }) {
     const query = `
-PREFIX skos: <http://www.w3.org/2004/02/skos/core#> 
-PREFIX dct: <http://purl.org/dc/terms/> 
-PREFIX gdv: <http://stad.gent/data/ns/data-processing/> 
-SELECT 
-  ?verwerking 
-  ?id  
-  ?description 
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX gdv: <http://stad.gent/data/ns/data-processing/>
+SELECT
+  ?verwerking
+  ?id
+  ?description
   ?processor
-  ?type 
-  ?name 
-  ?personalDataDescription 
-  ?sensitivePersonalDataDescription 
-  (group_concat(distinct ?personalData;separator=',') as ?personalData) 
-  (group_concat(distinct ?sensitivePersonalData;separator=',') as ?sensitivePersonalData) 
-  ?formal_framework 
-  ?formal_framework_clarification 
-  (group_concat(distinct ?grantee;separator=',') as ?grantees) 
-  ?storagePeriod 
+  ?type
+  ?name
+  ?personalDataDescription
+  ?sensitivePersonalDataDescription
+  (group_concat(distinct ?personalData;separator=',') as ?personalData)
+  (group_concat(distinct ?sensitivePersonalData;separator=',') as ?sensitivePersonalData)
+  ?formal_framework
+  ?formal_framework_clarification
+  (group_concat(distinct ?grantee;separator=',') as ?grantees)
+  ?storagePeriod
 WHERE {
-  <${resource}> a <http://data.vlaanderen.be/ns/toestemming#VerwerkingsActiviteit>; 
-                dct:identifier ?id; 
-                dct:description ?description; 
-                dct:type/skos:prefLabel ?type; 
-                dct:title ?name;  
+  <${resource}> a <http://data.vlaanderen.be/ns/toestemming#VerwerkingsActiviteit>;
+                dct:identifier ?id;
+                dct:description ?description;
+                dct:type/skos:prefLabel ?type;
+                dct:title ?name;
                 dct:temporal/dct:title ?storagePeriod;
                 <http://data.vlaanderen.be/ns/toestemming#verwerkingsgrond>/skos:prefLabel ?formal_framework;
                 <http://data.vlaanderen.be/ns/toestemming#verwerker>/skos:prefLabel ?processor.
   OPTIONAL { <${resource}> gdv:verduidelijkingRechtsgrond ?formal_framework_clarification }
   OPTIONAL { <${resource}> <http://stad.gent/data/ns/data-processing/grantee>/skos:prefLabel ?grantee }
-  OPTIONAL { <${resource}> <http://stad.gent/data/ns/data-processing/hasPersonalData>/dct:type/skos:prefLabel ?personalData } 
-  OPTIONAL { <${resource}> <http://stad.gent/data/ns/data-processing/hasSensitivePersonalData>/dct:type/skos:prefLabel ?sensitivePersonalData } 
-  OPTIONAL { <${resource}> <http://stad.gent/data/ns/data-processing/hasPersonalData>/dct:description ?personalDataDescription } 
-  OPTIONAL { <${resource}> <http://stad.gent/data/ns/data-processing/hasSensitivePersonalData>/dct:description ?sensitivePersonalDataDescription } 
+  OPTIONAL { <${resource}> <http://stad.gent/data/ns/data-processing/hasPersonalData>/dct:type/skos:prefLabel ?personalData }
+  OPTIONAL { <${resource}> <http://stad.gent/data/ns/data-processing/hasSensitivePersonalData>/dct:type/skos:prefLabel ?sensitivePersonalData }
+  OPTIONAL { <${resource}> <http://stad.gent/data/ns/data-processing/hasPersonalData>/dct:description ?personalDataDescription }
+  OPTIONAL { <${resource}> <http://stad.gent/data/ns/data-processing/hasSensitivePersonalData>/dct:description ?sensitivePersonalDataDescription }
   BIND(<${resource}> as ?verwerking)
 }
 GROUP BY ?verwerking ?id ?description ?processor ?type ?name ?personalDataDescription ?sensitivePersonalDataDescription ?formal_framework ?formal_framework_clarification ?storagePeriod
