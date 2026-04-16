@@ -1,12 +1,7 @@
 import ParentFallbackRoute from 'ember-metis/routes/fallback.js';
 import fetchUriInfo from 'ember-metis/utils/fetch-uri-info';
 import { service } from '@ember/service';
-
-function alternateSchemeSubject(subject) {
-  if (subject.startsWith('https://')) return `http://${subject.slice(8)}`;
-  if (subject.startsWith('http://')) return `https://${subject.slice(7)}`;
-  return null;
-}
+import { alternateSchemeSubject } from 'frontend-centrale-vindplaats/utils/alternate-scheme-subject';
 
 export default class FallbackRoute extends ParentFallbackRoute {
   @service breadcrumbs;
