@@ -1,7 +1,7 @@
 import Route from '@ember/routing/route';
 import { service } from '@ember/service';
 import fetch from 'fetch';
-import { naturalSort } from 'js_subject-pages/utils/natural-sort';
+import { naturalSort } from 'frontend-centrale-vindplaats/utils/natural-sort';
 
 export default class ViewVerwerkingsActiviteitRoute extends Route {
   @service fastboot;
