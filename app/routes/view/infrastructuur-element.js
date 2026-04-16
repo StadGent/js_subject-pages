@@ -1,6 +1,7 @@
 import Route from '@ember/routing/route';
 import { service } from '@ember/service';
 import fetch from 'fetch';
+import { alternateSchemeSubject } from 'frontend-centrale-vindplaats/utils/alternate-scheme-subject';
 
 export default class ViewInfrastructuurElementRoute extends Route {
   @service fastboot;
@@ -11,6 +12,7 @@ export default class ViewInfrastructuurElementRoute extends Route {
   };
 
   async model({ resource }) {
+    const alternateResource = alternateSchemeSubject(resource);
     const query = `
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
@@ -44,18 +46,22 @@ SELECT DISTINCT
   ?Einddatum
   ?generatedAtTime
 WHERE {
-  <\${resource}> rdf:type ?type.
-  <\${resource}> locn:geometry ?geometry.
-  <\${resource}> obd:nauwkeurigheid ?nauwkeurigheid.
-  <\${resource}> <http://stad.gent/id/applicatieprofiel/infrastructuurelementen#IE_Operationele_Status> ?operationeleStatus.
-  <\${resource}> fixme:eigenaar ?eigenaar.
-  <\${resource}> fixme:beheerder ?beheerder.
+  VALUES ?resource {
+   <${resource}>
+   <${alternateResource}>
+  }
+  ?resource rdf:type ?type.
+  ?resource locn:geometry ?geometry.
+  ?resource obd:nauwkeurigheid ?nauwkeurigheid.
+  ?resource <http://stad.gent/id/applicatieprofiel/infrastructuurelementen#IE_Operationele_Status> ?operationeleStatus.
+  ?resource fixme:eigenaar ?eigenaar.
+  ?resource fixme:beheerder ?beheerder.
 
   FILTER(STRSTARTS(STR(?type), STR(infra:)))
   FILTER(REPLACE(STR(?type), STR(infra:), "") != "Infrastructuurelement")
 
   OPTIONAL {
-    <\${resource}> infra:materiaal ?materiaal.
+    <${resource}> infra:materiaal ?materiaal.
     GRAPH <http://stad.gent/vlag-labels> {
       ?materiaal skos:prefLabel ?materiaalLabel.
     }
@@ -64,21 +70,21 @@ WHERE {
   OPTIONAL { ?nauwkeurigheid skos:prefLabel ?nauwkeurigheidLabel . }
   OPTIONAL { ?operationeleStatus skos:prefLabel ?operationeleStatusLabel . }
 
-  OPTIONAL { <\${resource}> <http://stad.gent/id/applicatieprofiel/infrastructuurelementen#IE_Bestuurlijke_Status> ?bestuurlijkeStatus . }
+  OPTIONAL { ?resource <http://stad.gent/id/applicatieprofiel/infrastructuurelementen#IE_Bestuurlijke_Status> ?bestuurlijkeStatus . }
   OPTIONAL { ?bestuurlijkeStatus skos:prefLabel ?bestuurlijkeStatusLabel . }
 
-  OPTIONAL { <\${resource}> obd:niveau ?niveau . }
-  OPTIONAL { <\${resource}> skos:altLabel ?altLabel . }
-  OPTIONAL { <\${resource}> <http://www.opengis.net/ont/geosparql#sfWithin> ?sfWithin . }
-  OPTIONAL { <\${resource}> infra:fietsdelen ?fietsdelen . }
-  OPTIONAL { <\${resource}> infra:overdekt ?overdekt . }
-  OPTIONAL { <\${resource}> infra:capaciteit ?capaciteit . }
-  OPTIONAL { <\${resource}> infra:afsluitbaar ?afsluitbaar . }
-  OPTIONAL { <\${resource}> infra:verplaatsbaar ?verplaatsbaar . }
+  OPTIONAL { ?resource obd:niveau ?niveau . }
+  OPTIONAL { ?resource skos:altLabel ?altLabel . }
+  OPTIONAL { ?resource <http://www.opengis.net/ont/geosparql#sfWithin> ?sfWithin . }
+  OPTIONAL { ?resource infra:fietsdelen ?fietsdelen . }
+  OPTIONAL { ?resource infra:overdekt ?overdekt . }
+  OPTIONAL { ?resource infra:capaciteit ?capaciteit . }
+  OPTIONAL { ?resource infra:afsluitbaar ?afsluitbaar . }
+  OPTIONAL { ?resource infra:verplaatsbaar ?verplaatsbaar . }
 
-  OPTIONAL { <\${resource}> obd:begindatum ?Begindatum . }
-  OPTIONAL { <\${resource}> obd:einddatum ?Einddatum . }
-  OPTIONAL { <\${resource}> prov:generatedAtTime ?generatedAtTime . }
+  OPTIONAL { ?resource obd:begindatum ?Begindatum . }
+  OPTIONAL { ?resource obd:einddatum ?Einddatum . }
+  OPTIONAL { ?resource prov:generatedAtTime ?generatedAtTime . }
 }
 LIMIT 1
 `;
