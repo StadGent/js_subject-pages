@@ -18,7 +18,6 @@ Router.map(function () {
       class:
         'http://data.vlaanderen.be/ns/openbaardomein/infrastructuur#Infrastructuurelement',
     });
-    this.route('infrastructuur-element');
   });
 
   externalRoute(this);
