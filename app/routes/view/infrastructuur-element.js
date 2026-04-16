@@ -57,7 +57,7 @@ WHERE {
 
   OPTIONAL {
     <\${resource}> infra:materiaal ?materiaal.
-    GRAPH <http://qa.stad.gent/materialen-erfgoed> {
+    GRAPH <http://stad.gent/vlag-labels> {
       ?materiaal skos:prefLabel ?materiaalLabel.
     }
   }
