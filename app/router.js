@@ -14,6 +14,10 @@ Router.map(function () {
     classRoute(this, 'verwerkings-activiteit', {
       class: 'http://data.vlaanderen.be/ns/toestemming#VerwerkingsActiviteit',
     });
+    classRoute(this, 'infrastructuur-element', {
+      class:
+        'https://data.vlaanderen.be/ns/openbaardomein/infrastructuur#Infrastructuurelement',
+    });
   });
 
   externalRoute(this);

@@ -26,14 +26,14 @@ export default class MenuService extends Service {
 
     if (this.isLoading) {
       // Wait for existing fetch to complete
-      await new Promise(resolve => setTimeout(resolve, 100));
+      await new Promise((resolve) => setTimeout(resolve, 100));
       return this.fetchLinkset();
     }
 
     this.isLoading = true;
     try {
       const headers = {
-        'Accept': 'application/json'
+        Accept: 'application/json',
       };
 
       console.log('Fetching menu from:', this.menuUrl);
@@ -42,7 +42,9 @@ export default class MenuService extends Service {
       console.log('Response status:', response.status, response.statusText);
 
       if (!response.ok) {
-        console.error(`Failed to fetch menu: ${response.status} ${response.statusText}`);
+        console.error(
+          `Failed to fetch menu: ${response.status} ${response.statusText}`,
+        );
         return null;
       }
 
@@ -79,7 +81,7 @@ export default class MenuService extends Service {
     console.log('Menu items:', items);
 
     // Find the item that matches the class URI
-    const matchingItem = items.find(item => item.href === classUri);
+    const matchingItem = items.find((item) => item.href === classUri);
     console.log('Matching item for class:', matchingItem);
 
     if (!matchingItem) {
@@ -93,7 +95,7 @@ export default class MenuService extends Service {
     console.log('Target hierarchy:', matchingItem.hierarchy);
 
     // Find all items that are direct ancestors (their hierarchy is a prefix of the target)
-    const ancestors = items.filter(item => {
+    const ancestors = items.filter((item) => {
       if (item.hierarchy.length >= hierarchyDepth) {
         return false; // Not an ancestor
       }
@@ -117,9 +119,9 @@ export default class MenuService extends Service {
     ancestors.sort((a, b) => a.hierarchy.length - b.hierarchy.length);
 
     // Convert to breadcrumb format (excluding the matching class item itself)
-    const breadcrumbs = ancestors.map(item => ({
+    const breadcrumbs = ancestors.map((item) => ({
       label: item.title,
-      url: item.href
+      url: item.href,
     }));
     console.log('Final breadcrumbs:', breadcrumbs);
 

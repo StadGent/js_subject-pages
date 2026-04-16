@@ -3,7 +3,7 @@ import { service } from '@ember/service';
 
 export default class ApplicationController extends Controller {
   @service('page-title') pageTitle;
-  
+
   queryParams = ['embed'];
   embed = null;
 
