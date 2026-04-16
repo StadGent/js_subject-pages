@@ -128,5 +128,6 @@ export default class FallbackRoute extends ParentFallbackRoute {
       console.log('No breadcrumbs found for types, using generic fallback');
       this.breadcrumbs.set([{ label: title, url: null }]);
     }
+    super.afterModel(...arguments);
   }
 }
