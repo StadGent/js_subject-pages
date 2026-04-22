@@ -24,5 +24,8 @@ table {
     width: 100%;
 }
 
+// Import the .location-map styling
+@import 'components/location-map';
+
 // Import shame (overrides and temporary CSS)
 @import "shame";
