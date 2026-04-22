@@ -1,0 +1,55 @@
+.location-map {
+  height: 260px;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+
+  &__error {
+    color: red;
+    font-size: 0.9rem;
+  }
+}
+
+.content-header-inner {
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
+
+  .content-header-text {
+    flex: 1;
+  }
+
+  .content-header-map {
+    flex: 0 0 300px;
+    border-radius: 8px;
+    overflow: hidden;
+
+    .location-map {
+      height: 240px;
+      margin-bottom: 0;
+    }
+  }
+}
+
+.header-properties {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.25rem 1rem;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+
+  dt {
+    font-weight: bold;
+  }
+}
+
+@media (max-width: 640px) {
+  .content-header-inner {
+    flex-direction: column;
+
+    .content-header-map {
+      flex: 0 0 auto;
+      width: 100%;
+    }
+  }
+}
