@@ -1,39 +1,39 @@
 {{page-title (concat "Stad Gent | " (or @model.altLabel @model.type
 "Infrastructuurelement"))}}
 
-{{! Hero header with map }}
-<div class="content-header-container primary dark-background">
-  <div class="content-header-inner">
-    <div class="content-header-text">
-      <h1>{{or @model.altLabel @model.type "Infrastructuurelement"}}</h1>
-      {{#if @model.type}}
-      <div class="summary-text">
-        <p>{{@model.type}}</p>
-      </div>
-      {{/if}}
+{{! Content Header }}
+<div
+  class="content-header-container primary dark-background {{if @model.geometry 'image'}}">
+  <div class="left">
+    <h1>{{or @model.altLabel @model.type "Infrastructuurelement"}}</h1>
 
-      <dl class="header-properties">
-        {{#if @model.materiaalLabel}}
-        <dt>Materiaal</dt>
-        <dd>{{@model.materiaalLabel}}</dd>
-        {{/if}}
-        {{#if @model.bestuurlijkeStatusLabel}}
-        <dt>Bestuurlijke status</dt>
-        <dd>{{@model.bestuurlijkeStatusLabel}}</dd>
-        {{/if}}
-        {{#if @model.operationeleStatusLabel}}
-        <dt>Operationele status</dt>
-        <dd>{{@model.operationeleStatusLabel}}</dd>
-        {{/if}}
-      </dl>
-    </div>
-
-    {{#if @model.geometry}}
-    <div class="content-header-map">
-      <LocationMap @geometry={{@model.geometry}} />
+    {{#if @model.type}}
+    <div class="summary-text">
+      <p>{{@model.type}}</p>
     </div>
     {{/if}}
+
+    <dl class="summary-box__details">
+      {{#if @model.materiaalLabel}}
+      <dt>Materiaal</dt>
+      <dd>{{@model.materiaalLabel}}</dd>
+      {{/if}}
+      {{#if @model.bestuurlijkeStatusLabel}}
+      <dt>Bestuurlijke status</dt>
+      <dd>{{@model.bestuurlijkeStatusLabel}}</dd>
+      {{/if}}
+      {{#if @model.operationeleStatusLabel}}
+      <dt>Operationele status</dt>
+      <dd>{{@model.operationeleStatusLabel}}</dd>
+      {{/if}}
+    </dl>
   </div>
+
+  {{#if @model.geometry}}
+  <div class="right">
+    <LocationMap @geometry={{@model.geometry}} />
+  </div>
+  {{/if}}
 </div>
 
 {{! Content sections }}
@@ -42,46 +42,32 @@
   {{! Eigenschappen sectie }}
   <section>
     <h2>Eigenschappen</h2>
-
     {{#if @model.materiaalLabel}}
     <h3>Materiaal</h3>
     <p>{{@model.materiaalLabel}}</p>
     {{/if}}
-
     {{#if @model.operationeleStatusLabel}}
     <h3>Operationele Status</h3>
     <p>{{@model.operationeleStatusLabel}}</p>
     {{/if}}
-
     {{#if @model.bestuurlijkeStatusLabel}}
     <h3>Bestuurlijke Status</h3>
     <p>{{@model.bestuurlijkeStatusLabel}}</p>
     {{/if}}
-
     {{#if (or @model.fietsdelen @model.overdekt @model.capaciteit
     @model.afsluitbaar @model.verplaatsbaar)}}
     <h3>Kenmerken</h3>
     <dl>
-      {{#if @model.fietsdelen}}
-      <dt>Fietsdelen</dt>
-      <dd>{{@model.fietsdelen}}</dd>
-      {{/if}}
-      {{#if @model.overdekt}}
-      <dt>Overdekt</dt>
-      <dd>{{@model.overdekt}}</dd>
-      {{/if}}
-      {{#if @model.capaciteit}}
-      <dt>Capaciteit</dt>
-      <dd>{{@model.capaciteit}}</dd>
-      {{/if}}
-      {{#if @model.afsluitbaar}}
-      <dt>Afsluitbaar</dt>
-      <dd>{{@model.afsluitbaar}}</dd>
-      {{/if}}
-      {{#if @model.verplaatsbaar}}
-      <dt>Verplaatsbaar</dt>
-      <dd>{{@model.verplaatsbaar}}</dd>
-      {{/if}}
+      {{#if @model.fietsdelen}}<dt>Fietsdelen</dt>
+      <dd>{{@model.fietsdelen}}</dd>{{/if}}
+      {{#if @model.overdekt}}<dt>Overdekt</dt>
+      <dd>{{@model.overdekt}}</dd>{{/if}}
+      {{#if @model.capaciteit}}<dt>Capaciteit</dt>
+      <dd>{{@model.capaciteit}}</dd>{{/if}}
+      {{#if @model.afsluitbaar}}<dt>Afsluitbaar</dt>
+      <dd>{{@model.afsluitbaar}}</dd>{{/if}}
+      {{#if @model.verplaatsbaar}}<dt>Verplaatsbaar</dt>
+      <dd>{{@model.verplaatsbaar}}</dd>{{/if}}
     </dl>
     {{/if}}
   </section>
@@ -89,17 +75,10 @@
   {{! Locatie sectie }}
   <section>
     <h2>Locatie</h2>
-
-    {{#if @model.geometry}}
-    <h3>Geometrie</h3>
-    <LocationMap @geometry={{@model.geometry}} />
-    {{/if}}
-
     {{#if @model.sfWithin}}
     <h3>Gemeente</h3>
     <p><a href="{{@model.sfWithin}}" target="_blank">{{@model.sfWithin}}</a></p>
     {{/if}}
-
     {{#if @model.niveau}}
     <h3>Niveau</h3>
     <p>{{@model.niveau}}</p>
@@ -109,12 +88,10 @@
   {{! Beheer sectie }}
   <section>
     <h2>Beheer</h2>
-
     {{#if @model.eigenaar}}
     <h3>Eigenaar</h3>
     <p><a href="{{@model.eigenaar}}" target="_blank">{{@model.eigenaar}}</a></p>
     {{/if}}
-
     {{#if @model.beheerder}}
     <h3>Beheerder</h3>
     <p><a href="{{@model.beheerder}}" target="_blank">{{@model.beheerder}}</a>
@@ -125,21 +102,12 @@
   {{! Metagegevens sectie }}
   <section>
     <h2>Metagegevens</h2>
-
-    {{#if @model.begindatum}}
-    <h3>Begindatum</h3>
-    <p>{{@model.begindatum}}</p>
-    {{/if}}
-
-    {{#if @model.einddatum}}
-    <h3>Einddatum</h3>
-    <p>{{@model.einddatum}}</p>
-    {{/if}}
-
-    {{#if @model.generatedAtTime}}
-    <h3>Gegenereerd op</h3>
-    <p>{{@model.generatedAtTime}}</p>
-    {{/if}}
+    {{#if @model.begindatum}}<h3>Begindatum</h3>
+    <p>{{@model.begindatum}}</p>{{/if}}
+    {{#if @model.einddatum}}<h3>Einddatum</h3>
+    <p>{{@model.einddatum}}</p>{{/if}}
+    {{#if @model.generatedAtTime}}<h3>Gegenereerd op</h3>
+    <p>{{@model.generatedAtTime}}</p>{{/if}}
   </section>
 
 </div>
