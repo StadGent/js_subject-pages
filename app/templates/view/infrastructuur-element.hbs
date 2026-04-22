@@ -1,34 +1,40 @@
 {{page-title (concat "Stad Gent | " (or @model.altLabel @model.type
 "Infrastructuurelement"))}}
 
-{{! Content Header Component }}
-<div class="content-header-container primary dark-background overlap">
-  <div>
-    <h1>{{or @model.altLabel @model.type "Infrastructuurelement"}}</h1>
-    {{#if @model.type}}
-    <div class="summary-text">
-      <p>{{@model.type}}</p>
+{{! Hero header with map }}
+<div class="content-header-container primary dark-background">
+  <div class="content-header-inner">
+    <div class="content-header-text">
+      <h1>{{or @model.altLabel @model.type "Infrastructuurelement"}}</h1>
+      {{#if @model.type}}
+      <div class="summary-text">
+        <p>{{@model.type}}</p>
+      </div>
+      {{/if}}
+
+      <dl class="header-properties">
+        {{#if @model.materiaalLabel}}
+        <dt>Materiaal</dt>
+        <dd>{{@model.materiaalLabel}}</dd>
+        {{/if}}
+        {{#if @model.bestuurlijkeStatusLabel}}
+        <dt>Bestuurlijke status</dt>
+        <dd>{{@model.bestuurlijkeStatusLabel}}</dd>
+        {{/if}}
+        {{#if @model.operationeleStatusLabel}}
+        <dt>Operationele status</dt>
+        <dd>{{@model.operationeleStatusLabel}}</dd>
+        {{/if}}
+      </dl>
+    </div>
+
+    {{#if @model.geometry}}
+    <div class="content-header-map">
+      <LocationMap @geometry={{@model.geometry}} />
     </div>
     {{/if}}
   </div>
 </div>
-
-{{! Summary Component }}
-<aside class="summary-box">
-  <h2 class="visually-hidden">Samenvatting</h2>
-  <dl>
-    <dt>Type</dt>
-    <dd>{{@model.type}}</dd>
-    {{#if @model.nauwkeurigheidLabel}}
-    <dt>Nauwkeurigheid</dt>
-    <dd>{{@model.nauwkeurigheidLabel}}</dd>
-    {{/if}}
-    {{#if @model.niveau}}
-    <dt>Niveau</dt>
-    <dd>{{@model.niveau}}</dd>
-    {{/if}}
-  </dl>
-</aside>
 
 {{! Content sections }}
 <div class="content-container">
@@ -86,7 +92,7 @@
 
     {{#if @model.geometry}}
     <h3>Geometrie</h3>
-    <p><code>{{@model.geometry}}</code></p>
+    <LocationMap @geometry={{@model.geometry}} />
     {{/if}}
 
     {{#if @model.sfWithin}}
