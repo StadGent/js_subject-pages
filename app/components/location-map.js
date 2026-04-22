@@ -34,7 +34,6 @@ export default class LocationMapComponent extends Component {
       }
 
       const L = (await import('leaflet')).default;
-      await import('leaflet/dist/leaflet.css');
 
       const [lng, lat] = proj4('EPSG:31370', 'WGS84', [coords.x, coords.y]);
 

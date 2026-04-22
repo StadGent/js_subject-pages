@@ -25,6 +25,7 @@ table {
 }
 
 // Import the .location-map styling
+@import 'leaflet/dist/leaflet';
 @import 'components/location-map';
 
 // Import shame (overrides and temporary CSS)
