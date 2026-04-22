@@ -1,0 +1,13 @@
+{{#if this.isLoading}}
+<p>Kaart laden...</p>
+{{/if}}
+
+{{#if this.error}}
+<p class="location-map__error">Kon kaart niet laden: {{this.error}}</p>
+{{/if}}
+
+{{#unless this.error}}
+<div {{did-insert this.initMap}} class="location-map"></div>
+{{/unless}}
+
+<p><code>{{@geometry}}</code></p>
