@@ -61,17 +61,21 @@ WHERE {
   FILTER(REPLACE(STR(?type), STR(infra:), "") != "Infrastructuurelement")
 
   OPTIONAL {
-    <${resource}> infra:materiaal ?materiaal.
-    GRAPH <http://stad.gent/vlag-labels> {
-      ?materiaal skos:prefLabel ?materiaalLabel.
+    ?resource infra:materiaal ?materiaal.
+    OPTIONAL {
+      GRAPH <http://stad.gent/vlag-labels> {
+        ?materiaal skos:prefLabel ?materiaalLabel.
+      }
     }
   }
 
   OPTIONAL { ?nauwkeurigheid skos:prefLabel ?nauwkeurigheidLabel . }
   OPTIONAL { ?operationeleStatus skos:prefLabel ?operationeleStatusLabel . }
 
-  OPTIONAL { ?resource <http://stad.gent/id/applicatieprofiel/infrastructuurelementen#IE_Bestuurlijke_Status> ?bestuurlijkeStatus . }
-  OPTIONAL { ?bestuurlijkeStatus skos:prefLabel ?bestuurlijkeStatusLabel . }
+  OPTIONAL {
+    ?resource <http://stad.gent/id/applicatieprofiel/infrastructuurelementen#IE_Bestuurlijke_Status> ?bestuurlijkeStatus .
+    OPTIONAL { ?bestuurlijkeStatus skos:prefLabel ?bestuurlijkeStatusLabel . }
+  }
 
   OPTIONAL { ?resource obd:niveau ?niveau . }
   OPTIONAL { ?resource skos:altLabel ?altLabel . }
