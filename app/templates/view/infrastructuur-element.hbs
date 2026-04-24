@@ -1,22 +1,20 @@
-{{page-title (concat "Stad Gent | " (or @model.altLabel @model.type
-"Infrastructuurelement"))}}
+{{page-title (concat "Stad Gent | " (or @model.altLabel @model.type "Infrastructuurelement"))}}
 
 {{! Content Header }}
-<div
-  class="content-header-container primary dark-background {{if @model.geometry 'image'}}">
+<div class="content-header-container primary dark-background {{if @model.geometry 'image'}}">
   <div class="left">
     <h1>{{or @model.altLabel @model.type "Infrastructuurelement"}}</h1>
 
     {{#if @model.type}}
     <div class="summary-text">
-      <p>"Volgende pagina bevat de relevante informatie van dit infrastructuurelement.</p>
+      <p>Volgende pagina bevat de relevante informatie van dit infrastructuurelement.</p>
     </div>
     {{/if}}
 
     <dl class="summary-box__details">
       {{#if @model.type}}
       <dt>Infrastructuurtype</dt>
-      <dd>{{model.type}}</dd>
+      <dd>{{@model.type}}</dd>
       {{#if @model.materiaalLabel}}
       <dt>Materiaal</dt>
       <dd>{{@model.materiaalLabel}}</dd>
@@ -64,7 +62,7 @@
     {{/if}}
   </section>
 
-  {{! Locatie sectie }}
+  {{#if (or @model.sfWithin @model.niveau)}}
   <section>
     <h2>Locatie</h2>
     {{#if @model.sfWithin}}
@@ -76,8 +74,9 @@
     <p>{{@model.niveau}}</p>
     {{/if}}
   </section>
+  {{/if}}
 
-  {{! Beheer sectie }}
+  {{#if (or @model.eigenaar @model.beheerder)}}
   <section>
     <h2>Beheer</h2>
     {{#if @model.eigenaar}}
@@ -86,12 +85,12 @@
     {{/if}}
     {{#if @model.beheerder}}
     <h3>Beheerder</h3>
-    <p><a href="{{@model.beheerder}}" target="_blank">{{@model.beheerder}}</a>
-    </p>
+    <p><a href="{{@model.beheerder}}" target="_blank">{{@model.beheerder}}</a></p>
     {{/if}}
   </section>
+  {{/if}}
 
-  {{! Metagegevens sectie }}
+  {{#if (or @model.begindatum @model.einddatum @model.generatedAtTime)}}
   <section>
     <h2>Metagegevens</h2>
     {{#if @model.begindatum}}<h3>Begindatum</h3>
@@ -101,5 +100,6 @@
     {{#if @model.generatedAtTime}}<h3>Gegenereerd op</h3>
     <p>{{@model.generatedAtTime}}</p>{{/if}}
   </section>
+  {{/if}}
 
 </div>
