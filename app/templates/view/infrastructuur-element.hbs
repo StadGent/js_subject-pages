@@ -9,11 +9,14 @@
 
     {{#if @model.type}}
     <div class="summary-text">
-      <p>{{@model.type}}</p>
+      <p>"Volgende pagina bevat de relevante informatie van dit infrastructuurelement.</p>
     </div>
     {{/if}}
 
     <dl class="summary-box__details">
+      {{#if @model.type}}
+      <dt>Infrastructuurtype</dt>
+      <dd>{{model.type}}</dd>
       {{#if @model.materiaalLabel}}
       <dt>Materiaal</dt>
       <dd>{{@model.materiaalLabel}}</dd>
@@ -42,18 +45,6 @@
   {{! Eigenschappen sectie }}
   <section>
     <h2>Eigenschappen</h2>
-    {{#if @model.materiaalLabel}}
-    <h3>Materiaal</h3>
-    <p>{{@model.materiaalLabel}}</p>
-    {{/if}}
-    {{#if @model.operationeleStatusLabel}}
-    <h3>Operationele Status</h3>
-    <p>{{@model.operationeleStatusLabel}}</p>
-    {{/if}}
-    {{#if @model.bestuurlijkeStatusLabel}}
-    <h3>Bestuurlijke Status</h3>
-    <p>{{@model.bestuurlijkeStatusLabel}}</p>
-    {{/if}}
     {{#if (or @model.fietsdelen @model.overdekt @model.capaciteit
     @model.afsluitbaar @model.verplaatsbaar)}}
     <h3>Kenmerken</h3>
