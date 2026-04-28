@@ -37,7 +37,7 @@ export default class LocationMapComponent extends Component {
 
       const [lng, lat] = proj4('EPSG:31370', 'WGS84', [coords.x, coords.y]);
 
-      this.map = L.map(element, { zoomControl: false, attributionControl: false }).setView([lat, lng], 14);
+      this.map = L.map(element, { zoomControl: false, attributionControl: false }).setView([lat, lng], 17);
 
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
