@@ -51,7 +51,15 @@
       {{#if @model.fietsdelen}}<dt>Fietsdelen</dt>
       <dd>{{@model.fietsdelen}}</dd>{{/if}}
       {{#if @model.overdekt}}<dt>Overdekt</dt>
-      <dd>{{@model.overdekt}}</dd>{{/if}}
+      <dd>
+        {{#if (eq @model.overdekt "0")}}
+          Deze fietsenstalling is niet overdekt.
+        {{else if (eq @model.overdekt "1")}}
+          Deze fietsenstalling is overdekt.
+        {{else}}
+          {{@model.overdekt}}
+        {{/if}}
+      </dd>{{/if}}
       {{#if @model.capaciteit}}<dt>Capaciteit</dt>
       <dd>{{@model.capaciteit}}</dd>{{/if}}
       {{#if @model.afsluitbaar}}<dt>Afsluitbaar</dt>
