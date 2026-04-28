@@ -49,7 +49,7 @@ export default class LocationMapComponent extends Component {
         color: '#0F6E56',
         weight: 2,
         fillOpacity: 0.9,
-      }).addTo(this.map).bindPopup('Locatie').openPopup();
+      }).addTo(this.map).bindPopup('Locatie');
     } catch (err) {
       this.error = err.message;
       console.error('Map initialization failed:', err);
