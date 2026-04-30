@@ -49,23 +49,47 @@
     <h3>Kenmerken</h3>
     <dl>
       {{#if @model.fietsdelen}}<dt>Fietsdelen</dt>
-      <dd>{{@model.fietsdelen}}</dd>{{/if}}
+      <dd>
+        {{#if (eq @model.fietsdelen "0")}}
+          Dit is geen fietsstalling voor deelfietsen.
+        {{else if (eq @model.fietsdelen "1")}}
+          Dit is een fietsstalling voor deelfietsen.
+        {{else}}
+          {{@model.fietsdelen}}
+        {{/if}}
+      </dd>{{/if}}
       {{#if @model.overdekt}}<dt>Overdekt</dt>
       <dd>
         {{#if (eq @model.overdekt "0")}}
-          Deze fietsenstalling is niet overdekt.
+          Deze fietsstalling is niet overdekt.
         {{else if (eq @model.overdekt "1")}}
-          Deze fietsenstalling is overdekt.
+          Deze fietsstalling is overdekt.
         {{else}}
           {{@model.overdekt}}
         {{/if}}
       </dd>{{/if}}
       {{#if @model.capaciteit}}<dt>Capaciteit</dt>
-      <dd>{{@model.capaciteit}}</dd>{{/if}}
+      <dd>Deze fietsstalling heeft plaats voor {{@model.capaciteit}} fietsen.</dd>{{/if}}
       {{#if @model.afsluitbaar}}<dt>Afsluitbaar</dt>
-      <dd>{{@model.afsluitbaar}}</dd>{{/if}}
+      <dd>
+        {{#if (eq @model.afsluitbaar "0")}}
+          Deze fietsstalling is niet afsluitbaar.
+        {{else if (eq @model.afsluitbaar "1")}}
+          Deze fietsstalling is afsluitbaar.
+        {{else}}
+          {{@model.afsluitbaar}}
+        {{/if}}
+      </dd>{{/if}}
       {{#if @model.verplaatsbaar}}<dt>Verplaatsbaar</dt>
-      <dd>{{@model.verplaatsbaar}}</dd>{{/if}}
+      <dd>
+        {{#if (eq @model.verplaatsbaar "0")}}
+          Dit infrastructuurelement is niet verplaatsbaar.
+        {{else if (eq @model.verplaatsbaar "1")}}
+          Dit infrastructuurelement is verplaatsbaar.
+        {{else}}
+          {{@model.verplaatsbaar}}
+        {{/if}}
+      </dd>{{/if}}
     </dl>
     {{/if}}
   </section>
